@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}SkillsTrade — {{ category_name|default:category }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center gap-2 text-xs sm:text-sm text-slate-500 mb-6">
+        <a href="{% url 'common:home' %}" class="hover:text-indigo-600 transition-colors flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            Home
+        </a>
+        <span class="text-slate-300">/</span>
+        <span class="text-slate-400">Categories</span>
+        <span class="text-slate-300">/</span>
+        <span class="text-slate-800 font-medium">{{ category_name|default:category }}</span>
+    </nav>
+
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 sm:mb-10">
+        <div>
+            <div class="flex items-center gap-3">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    {{ category_name|default:category }}
+                </h1>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                    {{ skills|length }} skill{{ skills|length|pluralize }}
+                </span>
+            </div>
+            <p class="mt-1.5 text-sm text-slate-600">
+                Explore skills available for peer trade and collaboration in this category.
+            </p>
+        </div>
+
+        <a href="{% url 'skills:create-skill' %}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 shadow-sm transition-colors self-start sm:self-auto">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Post a Skill
+        </a>
+    </div>
+
+    <!-- Skills Grid or Empty State -->
+    {% if skills %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for skill in skills %}
+                <div class="bg-white rounded-2xl border border-slate-200/90 hover:border-indigo-300 p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+                    <div>
+                        <!-- Card Header: Badge & Difficulty -->
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            {% if skill.badge %}
+                                <img src="{{ skill.badge.url }}" alt="{{ skill.name }}" class="w-12 h-12 rounded-xl object-cover border border-slate-200 shadow-xs">
+                            {% else %}
+                                <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 font-bold text-lg flex items-center justify-center border border-indigo-100 shadow-xs group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                    {{ skill.name|first|upper }}
+                                </div>
+                            {% endif %}
+
+                            <!-- Difficulty Badge -->
+                            <span class="inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-full border
+                                {% if skill.difficulty == '1' %} bg-emerald-50 text-emerald-700 border-emerald-200
+                                {% elif skill.difficulty == '2' %} bg-blue-50 text-blue-700 border-blue-200
+                                {% elif skill.difficulty == '3' %} bg-purple-50 text-purple-700 border-purple-200
+                                {% else %} bg-slate-50 text-slate-700 border-slate-200
+                                {% endif %}"
+                            >
+                                {{ skill.get_difficulty_display }}
+                            </span>
+                        </div>
+
+                        <!-- Skill Name -->
+                        <h2 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug mb-2">
+                            {{ skill.name }}
+                        </h2>
+
+                        <!-- Description -->
+                        <p class="text-sm text-slate-600 line-clamp-3 leading-relaxed mb-4">
+                            {{ skill.description|default:"No description provided for this skill." }}
+                        </p>
+
+                        <!-- Related Skills (if any) -->
+                        {% if skill.related_skills.all %}
+                            <div class="mb-4 pt-3 border-t border-slate-100">
+                                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 block mb-1.5">
+                                    Related Skills
+                                </span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    {% for rel in skill.related_skills.all %}
+                                        <span class="inline-flex items-center gap-1 text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200/80 px-2 py-0.5 rounded-lg">
+                                            <svg class="w-3 h-3 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                                            </svg>
+                                            {{ rel.name }}
+                                        </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-slate-400">
+                            {{ skill.created_at|date:"M d, Y" }}
+                        </span>
+                        <span class="font-semibold text-indigo-600 group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
+                            Trade Skill
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Empty State -->
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-10 sm:p-14 text-center max-w-xl mx-auto shadow-sm">
+            <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4 border border-indigo-100">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                    <path d="M6 6h10"/>
+                    <path d="M6 10h10"/>
+                </svg>
+            </div>
+            <h2 class="text-lg font-bold text-slate-900 mb-1">
+                No skills listed in {{ category_name|default:category }} yet
+            </h2>
+            <p class="text-sm text-slate-500 mb-6 max-w-sm mx-auto leading-relaxed">
+                Be the first to list a skill in this category and start exchanging your expertise with the community.
+            </p>
+            <a href="{% url 'skills:create-skill' %}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Post the First Skill
+            </a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
