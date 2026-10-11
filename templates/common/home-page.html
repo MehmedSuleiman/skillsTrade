@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block title %}SkillsTrade — Choose Skill Type{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+
+    <div class="mb-8 sm:mb-10">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Choose Skill Type
+        </h1>
+        <p class="mt-2 text-sm sm:text-base text-slate-600 max-w-2xl">
+            Select a skill category to browse available trades and connect with peers ready to share their knowledge.
+        </p>
+    </div>
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+        {% for skill_type in skill_types.choices %}
+        <div class="group relative bg-white rounded-2xl border border-slate-200/90 hover:border-indigo-300 p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between overflow-hidden">
+            {% if skill_type.0 == 'tech' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-indigo-500 to-blue-500"></div>
+            {% elif skill_type.0 == 'creat' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-rose-500 to-pink-500"></div>
+            {% elif skill_type.0 == 'lang' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+            {% elif skill_type.0 == 'business' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+            {% elif skill_type.0 == 'craft' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-orange-500 to-amber-600"></div>
+            {% elif skill_type.0 == 'life' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-500 to-purple-500"></div>
+            {% elif skill_type.0 == 'sports' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-red-500 to-rose-600"></div>
+            {% elif skill_type.0 == 'social' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-500 to-blue-500"></div>
+            {% elif skill_type.0 == 'digital_lifestyle' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-teal-500 to-emerald-500"></div>
+            {% elif skill_type.0 == 'acad' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-600"></div>
+            {% elif skill_type.0 == 'spec' %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-purple-500 to-fuchsia-500"></div>
+            {% else %}
+                <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-slate-500 to-indigo-500"></div>
+            {% endif %}
+
+            <div>
+                <div class="flex items-start justify-between gap-3 mb-4">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center shadow-xs transition-transform group-hover:scale-105
+                        {% if skill_type.0 == 'tech' %} bg-indigo-600 text-white shadow-indigo-100
+                        {% elif skill_type.0 == 'creat' %} bg-rose-500 text-white shadow-rose-100
+                        {% elif skill_type.0 == 'lang' %} bg-amber-500 text-white shadow-amber-100
+                        {% elif skill_type.0 == 'business' %} bg-emerald-600 text-white shadow-emerald-100
+                        {% elif skill_type.0 == 'craft' %} bg-orange-600 text-white shadow-orange-100
+                        {% elif skill_type.0 == 'life' %} bg-violet-600 text-white shadow-violet-100
+                        {% elif skill_type.0 == 'sports' %} bg-red-500 text-white shadow-red-100
+                        {% elif skill_type.0 == 'social' %} bg-sky-600 text-white shadow-sky-100
+                        {% elif skill_type.0 == 'digital_lifestyle' %} bg-teal-600 text-white shadow-teal-100
+                        {% elif skill_type.0 == 'acad' %} bg-blue-600 text-white shadow-blue-100
+                        {% elif skill_type.0 == 'spec' %} bg-purple-600 text-white shadow-purple-100
+                        {% else %} bg-slate-700 text-white shadow-slate-200
+                        {% endif %}"
+                    >
+                        {% if skill_type.0 == 'tech' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                        {% elif skill_type.0 == 'creat' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+                                <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+                                <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+                                <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2z"></path>
+                            </svg>
+                        {% elif skill_type.0 == 'lang' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m5 8 6 6"></path>
+                                <path d="m4 14 6-6 2-3"></path>
+                                <path d="M2 5h12"></path>
+                                <path d="M7 2h1"></path>
+                                <path d="m22 22-5-10-5 10"></path>
+                                <path d="M14 18h6"></path>
+                            </svg>
+                        {% elif skill_type.0 == 'business' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        {% elif skill_type.0 == 'craft' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                        {% elif skill_type.0 == 'life' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                            </svg>
+                        {% elif skill_type.0 == 'sports' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 5v14"></path>
+                                <path d="M18 5v14"></path>
+                                <path d="M3 8v8"></path>
+                                <path d="M21 8v8"></path>
+                                <path d="M6 12h12"></path>
+                            </svg>
+                        {% elif skill_type.0 == 'social' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        {% elif skill_type.0 == 'digital_lifestyle' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m22 8-6 4 6 4V8Z"></path>
+                                <rect width="14" height="12" x="2" y="6" rx="2" ry="2"></rect>
+                            </svg>
+                        {% elif skill_type.0 == 'acad' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21.42 10.922a1 1 0 0 0-.019-.838L12.83 3.18a2 2 0 0 0-1.66 0L2.6 10.084a1 1 0 0 0 0 1.832l8.57 6.908a2 2 0 0 0 1.66 0l6.71-5.409a1 1 0 0 0 .39-.623l1.49-1.87Z"></path>
+                                <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path>
+                            </svg>
+                        {% elif skill_type.0 == 'spec' %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        {% else %}
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <circle cx="19" cy="5" r="2"></circle>
+                                <circle cx="5" cy="19" r="2"></circle>
+                                <circle cx="19" cy="19" r="2"></circle>
+                                <circle cx="5" cy="5" r="2"></circle>
+                            </svg>
+                        {% endif %}
+                    </div>
+
+
+                </div>
+
+                <h2 class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug mb-2">
+                    {{ skill_type.1 }}
+                </h2>
+
+                <p class="text-sm text-slate-500 leading-relaxed mb-4">
+                    {% if skill_type.0 == 'tech' %}
+                        Software development, web development, cloud computing, AI/ML models, and cybersecurity.
+                    {% elif skill_type.0 == 'creat' %}
+                        UI/UX interface design, vector illustration, video editing, motion graphics, and music production.
+                    {% elif skill_type.0 == 'lang' %}
+                        Conversational fluency, native accent coaching, ESL, translation, and public speaking.
+                    {% elif skill_type.0 == 'business' %}
+                        Startup strategy, product management, performance marketing, SEO, and financial modeling.
+                    {% elif skill_type.0 == 'craft' %}
+                        Woodworking, ceramic pottery, leather crafting, sewing & tailoring, and hardware DIY.
+                    {% elif skill_type.0 == 'life' %}
+                        Mindfulness meditation, culinary arts, daily habit architecture, time management, and wellness.
+                    {% elif skill_type.0 == 'sports' %}
+                        Calisthenics, yoga flows, martial arts technique, marathon pacing, and mobility recovery.
+                    {% elif skill_type.0 == 'social' %}
+                        Effective networking, conflict mediation, community organizing, event hosting, and empathetic leadership.
+                    {% elif skill_type.0 == 'digital_lifestyle' %}
+                        Content creation workflows, podcast production, YouTube channel growth, and remote work systems.
+                    {% elif skill_type.0 == 'acad' %}
+                        Calculus, linear algebra, statistical data analysis, academic paper writing, and scientific research.
+                    {% elif skill_type.0 == 'spec' %}
+                        3D printing slicing & tuning, audio mastering, drone piloting, competitive chess, and rare crafts.
+                    {% else %}
+                        Unique hobbies, emerging crafts, custom interests, and cross-disciplinary skills outside traditional buckets.
+                    {% endif %}
+                </p>
+
+            </div>
+
+
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-xs text-slate-400 font-medium">Open for trades</span>
+                <a 
+                    href="{% url 'skills:skills_type' skill_type.0 %}" 
+                    class="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 group-hover:text-indigo-700 hover:underline"
+                >
+                    <span>View Skills</span>
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
