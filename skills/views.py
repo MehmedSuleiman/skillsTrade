@@ -2,11 +2,11 @@ from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from common.forms import SearchForm
 from common.models import SkillCategory
-from skills.forms import CreateSkillForm
+from skills.forms import CreateSkillForm, EditSkillForm
 from skills.models import Skill
 
 
@@ -36,3 +36,12 @@ class SkillCreate(CreateView):
     form_class = CreateSkillForm
     template_name = 'skills/create_skill.html'
     success_url = reverse_lazy('common:home')
+
+
+class SkillUpdate(UpdateView):
+    model = Skill
+    form_class = EditSkillForm
+    template_name = 'skills/update_skill.html'
+    success_url = reverse_lazy('common:home')
+
+
