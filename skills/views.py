@@ -1,8 +1,9 @@
+from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from common.forms import SearchForm
 from common.models import SkillCategory
@@ -37,6 +38,10 @@ class SkillCreate(CreateView):
     template_name = 'skills/create_skill.html'
     success_url = reverse_lazy('common:home')
 
+    def form_valid(self, form):
+        messages.success(self.request, "Skill successfully created")
+        return super().form_valid(form)
+
 
 class SkillUpdate(UpdateView):
     model = Skill
@@ -44,4 +49,7 @@ class SkillUpdate(UpdateView):
     template_name = 'skills/update_skill.html'
     success_url = reverse_lazy('common:home')
 
-
+class SkillDelete(DeleteView):
+    model = Skill
+    template_name = 'skills/confirm_delete.html'
+    success_url = reverse_lazy('common:home')
