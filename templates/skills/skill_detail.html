@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ skill.name }} | SkillsTrade{% endblock %}
+
+{% block content %}
+    <div class="relative isolate overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-slate-50">
+        <div class="absolute -top-24 right-0 -z-10 h-72 w-72 rounded-full bg-indigo-100/60 blur-3xl"></div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm text-slate-500 mb-8">
+                <a href="{% url 'common:home' %}" class="hover:text-indigo-600 transition-colors">Home</a>
+                <span class="text-slate-300">/</span>
+                <a href="{% url 'skills:skills_type' skill.category %}"
+                   class="hover:text-indigo-600 transition-colors">{{ skill.get_category_display }}</a>
+                <span class="text-slate-300">/</span>
+                <span class="font-medium text-slate-800 truncate" aria-current="page">{{ skill.name }}</span>
+            </nav>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+                <article class="lg:col-span-2 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+                    <div class="h-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-sky-400"></div>
+                    <div class="p-6 sm:p-10">
+                        <div class="flex flex-col sm:flex-row sm:items-start gap-5 sm:gap-6">
+                            {% if skill.badge %}
+                                <img src="{{ skill.badge.url }}" alt="{{ skill.name }} badge"
+                                     class="w-20 h-20 rounded-2xl object-cover border border-slate-200 shadow-sm shrink-0">
+                            {% else %}
+                                <div class="w-20 h-20 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center text-3xl font-bold shrink-0">{{ skill.name|first|upper }}</div>
+                            {% endif %}
+                            <div class="min-w-0 flex-1">
+                                <div class="flex flex-wrap items-center gap-2 mb-3">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">{{ skill.get_category_display }}</span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border
+                                    {% if skill.difficulty == '1' %}bg-emerald-50 text-emerald-700 border-emerald-200
+                                    {% elif skill.difficulty == '2' %}bg-blue-50 text-blue-700 border-blue-200
+                                    {% elif skill.difficulty == '3' %}bg-purple-50 text-purple-700 border-purple-200
+                                    {% else %}bg-slate-50 text-slate-700 border-slate-200{% endif %}">{{ skill.get_difficulty_display }}</span>
+                                    {% if skill.is_active %}
+                                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700"><span
+                                                class="w-2 h-2 rounded-full bg-emerald-500"></span>Active listing</span>
+                                    {% else %}
+                                        <span class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500"><span
+                                                class="w-2 h-2 rounded-full bg-slate-400"></span>Currently inactive</span>
+                                    {% endif %}
+                                </div>
+                                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 break-words">{{ skill.name }}</h1>
+                                <p class="mt-2 text-sm text-slate-500">Shared with the SkillsTrade community
+                                    since {{ skill.created_at|date:"F j, Y" }}</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-9 border-t border-slate-100 pt-8">
+                            <h2 class="text-lg font-bold text-slate-900 mb-3">About this skill</h2>
+                            <p class="text-slate-600 leading-7 whitespace-pre-line">{{ skill.description|default:"No description has been added for this skill yet." }}</p>
+                        </div>
+
+                        {% if skill.related_skills.all %}
+                            <div class="mt-8 border-t border-slate-100 pt-7">
+                                <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">Related
+                                    skills</h2>
+                                <div class="flex flex-wrap gap-2">
+                                    {% for related_skill in skill.related_skills.all %}
+                                        <span class="inline-flex items-center gap-2 rounded-xl bg-slate-50 border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>{{ related_skill.name }}
+                                    </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </article>
+
+                <aside class="space-y-5">
+                    <section class="rounded-3xl bg-slate-900 p-6 sm:p-7 text-white shadow-lg shadow-slate-900/10">
+                        <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center mb-5 text-indigo-200">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M16 3l4 4-4 4M20 7H4m4 14-4-4 4-4m-4 4h16"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-bold">Ready to learn together?</h2>
+                        <p class="mt-2 text-sm leading-6 text-slate-300">Explore more skills in this category or share
+                            your own expertise with the community.</p>
+                        <a href="{% url 'skills:skills_type' skill.category %}"
+                           class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 hover:bg-indigo-50 transition-colors">
+                            Browse this category
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14m-7-7 7 7-7 7"/>
+                            </svg>
+                        </a>
+                    </section>
+
+                    <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Listing details</h2>
+                        <dl class="mt-4 divide-y divide-slate-100">
+                            <div class="flex items-center justify-between gap-4 py-3">
+                                <dt class="text-sm text-slate-500">Difficulty</dt>
+                                <dd class="text-sm font-semibold text-slate-800">{{ skill.get_difficulty_display }}</dd>
+                            </div>
+                            <div class="flex items-center justify-between gap-4 py-3">
+                                <dt class="text-sm text-slate-500">Category</dt>
+                                <dd class="text-sm font-semibold text-slate-800 text-right">{{ skill.get_category_display }}</dd>
+                            </div>
+                            <div class="flex items-center justify-between gap-4 py-3">
+                                <dt class="text-sm text-slate-500">Views</dt>
+                                <dd class="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-800">
+                                    <svg class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                         stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/>
+                                        <circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    {{ skill.views }}
+                                </dd>
+                            </div>
+                        </dl>
+                    </section>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="{% url 'skills:update-skill' skill.slug %}"
+                           class="inline-flex items-center justify-center gap-2 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-700 hover:bg-indigo-100 hover:border-indigo-300 transition-colors">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="m16 4 4 4M4 20l4-.8L19 8a2.1 2.1 0 0 0-3-3L5 16l-1 4Z"/>
+                            </svg>
+                            Edit
+                        </a>
+                        <a href="{% url 'skills:delete-skill' skill.slug %}"
+                           class="inline-flex items-center justify-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 hover:bg-rose-100 hover:border-rose-300 transition-colors">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6"/>
+                            </svg>
+                            Delete
+                        </a>
+                    </div>
+
+                    <a href="{% url 'common:home' %}"
+                       class="inline-flex items-center gap-2 px-1 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="m15 18-6-6 6-6"/>
+                        </svg>
+                        Back to all skills
+                    </a>
+                </aside>
+            </div>
+        </div>
+    </div>
+{% endblock %}

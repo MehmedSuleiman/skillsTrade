@@ -1,9 +1,11 @@
 from django.contrib import messages
-from django.db.models import Q
+from django.db import models
+from django.db.models import Q, F
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic.detail import _M
 
 from common.forms import SearchForm
 from common.models import SkillCategory
@@ -30,7 +32,7 @@ def skills_type_view(request : HttpRequest, skills_type) -> HttpResponse:
         'category_name': category_name,
         'search_form': search_form,
     }
-    return render(request, 'skills/skill_types.html', context)
+    return render(request, 'skills/skill_type.html', context)
 
 class SkillCreate(CreateView):
     model = Skill
@@ -51,5 +53,15 @@ class SkillUpdate(UpdateView):
 
 class SkillDelete(DeleteView):
     model = Skill
-    template_name = 'skills/confirm_delete.html'
+    template_name = 'skills/delete_skill.html'
     success_url = reverse_lazy('common:home')
+
+class SkillDetail(DetailView):
+    model = Skill
+    template_name = 'skills/skill_detail.html'
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        obj.objects.update(views = F('views') + 1)
+        return obj
+

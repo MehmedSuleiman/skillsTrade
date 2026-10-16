@@ -1,4 +1,8 @@
+from django.core.exceptions import ValidationError
 from django.db import models
+
+from schools.models import School
+from skills.models import Skill
 
 
 class SkillCategory(models.TextChoices):
@@ -26,3 +30,17 @@ class TimeStampModel(models.Model):
 
     class Meta:
         abstract = True
+
+class SchoolSkill(models.Model):
+    school = models.ForeignKey(
+        to =School,
+        on_delete=models.CASCADE,
+    )
+    skill = models.ForeignKey(
+        to= Skill,
+        on_delete=models.CASCADE
+    )
+
+    def clean(self) -> None:
+        if not self.school.is_verified:
+            raise ValidationError('School is not yet verified, and can\'t post skills.')

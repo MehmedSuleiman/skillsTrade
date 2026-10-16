@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}SkillsTrade — Official Schools{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs sm:text-sm text-slate-500 mb-6">
+        <a href="{% url 'common:home' %}" class="hover:text-indigo-600 transition-colors inline-flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1-1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            Home
+        </a>
+        <span class="text-slate-300">/</span>
+        <span class="font-medium text-slate-800" aria-current="page">Official Schools</span>
+    </nav>
+
+    <div class="mb-8 sm:mb-10">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Official Schools</h1>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                        {{ schools|length }} school{{ schools|length|pluralize }}
+                    </span>
+                </div>
+                <p class="mt-1.5 text-sm text-slate-600">Discover schools, learning communities, and the skills they offer.</p>
+            </div>
+            <div class="inline-flex items-center gap-2 text-sm text-slate-500">
+                <svg class="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+                Verified learning communities
+            </div>
+        </div>
+    </div>
+
+    {% include 'common/search_bar.html' %}
+
+    {% if schools %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for school in schools %}
+                <article class="bg-white rounded-2xl border border-slate-200/90 hover:border-indigo-300 p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-start justify-between gap-3 mb-5">
+                            <div class="flex items-center gap-3 min-w-0">
+                                {% if school.logo %}
+                                    <img src="{{ school.logo.url }}" alt="{{ school.name }} logo" class="w-14 h-14 rounded-xl object-cover border border-slate-200 shadow-sm shrink-0">
+                                {% else %}
+                                    <div class="w-14 h-14 rounded-xl bg-indigo-50 text-indigo-600 font-bold text-xl flex items-center justify-center border border-indigo-100 group-hover:bg-indigo-600 group-hover:text-white transition-colors shrink-0">{{ school.name|first|upper }}</div>
+                                {% endif %}
+                                <div class="min-w-0">
+                                    <h2 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug break-words">{{ school.name }}</h2>
+                                    <p class="mt-1 text-xs text-slate-500 inline-flex items-center gap-1.5">
+                                        <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                        {{ school.city }}, {{ school.country }}
+                                    </p>
+                                </div>
+                            </div>
+                            {% if school.is_verified %}
+                                <span title="Verified school" class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 shrink-0">
+                                    <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 1.667 12.575 3l2.9-.05.95 2.742 2.092 2.008-.95 2.742.95 2.742-2.092 2.008-.95 2.742-2.9-.05L10 19.167 7.425 17.83l-2.9.05-.95-2.742-2.092-2.008.95-2.742-.95-2.742L3.575 5.64l.95-2.742 2.9.05L10 1.667Zm3.3 6.416a.833.833 0 0 0-1.2-1.166l-3.15 3.24-1.05-1.08a.833.833 0 1 0-1.2 1.166l1.65 1.7a.833.833 0 0 0 1.2 0l3.75-3.86Z" clip-rule="evenodd"/></svg>
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <p class="text-sm text-slate-600 line-clamp-3 leading-relaxed mb-5">{{ school.description }}</p>
+
+                        <div class="space-y-2.5 mb-5">
+                            <div class="flex items-start gap-2.5 text-sm text-slate-600">
+                                <svg class="w-4 h-4 mt-0.5 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
+                                <a href="mailto:{{ school.email }}" class="hover:text-indigo-600 break-all transition-colors">{{ school.email }}</a>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-slate-600">
+                                <svg class="w-4 h-4 mt-0.5 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.35 1.9.68 2.8a2 2 0 0 1-.45 2.11L8.07 9.93a16 16 0 0 0 6 6l1.3-1.27a2 2 0 0 1 2.11-.45c.9.33 1.84.56 2.8.68a2 2 0 0 1 1.72 2.03Z"/></svg>
+                                <span>{{ school.phone }}</span>
+                            </div>
+                            {% if school.website %}
+                                <div class="flex items-start gap-2.5 text-sm text-slate-600">
+                                    <svg class="w-4 h-4 mt-0.5 text-slate-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z"/></svg>
+                                    <a href="{{ school.website }}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-700 hover:underline break-all">Visit website</a>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if school.skills.all %}
+                            <div class="mb-4 pt-4 border-t border-slate-100">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Offered skills</span>
+                                    <span class="text-xs text-slate-400">{{ school.skills.all|length }}</span>
+                                </div>
+                                <div class="flex flex-wrap gap-1.5">
+                                    {% for skill in school.skills.all|slice:":4" %}
+                                        <span class="inline-flex items-center gap-1 text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200/80 px-2 py-1 rounded-lg">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>{{ skill.name }}
+                                        </span>
+                                    {% endfor %}
+                                    {% if school.skills.all|length > 4 %}
+                                        <span class="inline-flex items-center text-xs font-medium text-slate-500 px-2 py-1">+{{ school.skills.all|length|add:"-4" }} more</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% else %}
+                            <p class="mb-4 pt-4 border-t border-slate-100 text-xs text-slate-400">No skills listed yet</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 text-xs">
+                        <span class="text-slate-400">
+                            {% if school.founded_year %}Founded {{ school.founded_year }}{% else %}Added {{ school.created_at|date:"M d, Y" }}{% endif %}
+                        </span>
+                        {% if school.is_active %}
+                            <span class="inline-flex items-center gap-1.5 font-medium text-emerald-700"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Active</span>
+                        {% else %}
+                            <span class="inline-flex items-center gap-1.5 font-medium text-slate-500"><span class="w-2 h-2 rounded-full bg-slate-400"></span>Inactive</span>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-10 sm:p-14 text-center max-w-xl mx-auto shadow-sm">
+            <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4 border border-indigo-100">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01M9 18v.01M15 13v.01M15 16v.01M15 19v.01"/></svg>
+            </div>
+            <h2 class="text-lg font-bold text-slate-900 mb-1">No schools found</h2>
+            <p class="text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">There are no schools to show right now. Check back soon to discover learning communities.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
