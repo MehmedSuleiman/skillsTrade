@@ -6,7 +6,7 @@ from skills.models import Skill
 class BaseSkillForm(forms.ModelForm):
     class Meta:
         model = Skill
-        exclude = ['is_active', 'slug']
+        exclude = ['is_active', 'slug', 'views']
 
         labels = {
             'name': 'Skill Name',

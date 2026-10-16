@@ -14,6 +14,7 @@ class Skill(TimeStampModel):
 
     name = models.CharField(
         max_length = 100,
+        unique= True,
         validators=[
             MinLengthValidator(5),
         ]
@@ -50,6 +51,9 @@ class Skill(TimeStampModel):
     slug = models.SlugField(
         blank = True,
         unique = True,
+    )
+    views = models.PositiveIntegerField(
+        default = 0,
     )
 
     def __str__(self) -> str:
