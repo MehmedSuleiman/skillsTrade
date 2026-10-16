@@ -2,7 +2,7 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db import models
 from django.utils.text import slugify
 
-from common.models import TimeStampModel
+from common.models import TimeStampModel, SchoolSkill
 from skills.models import Skill
 
 
@@ -57,12 +57,17 @@ class School(TimeStampModel):
 
     skills = models.ManyToManyField(
         to = Skill,
-        through ='SchoolSkill'
+        through =SchoolSkill
     )
 
     slug = models.SlugField(
         unique=True
     )
+
+    views = models.PositiveIntegerField(
+        default = 0,
+    )
+
 
     def __str__(self) -> str:
         return self.name

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete {{ school.name }} | SkillsTrade{% endblock %}
+
+{% block content %}
+<div class="mx-auto max-w-xl px-4 py-10 sm:px-6 sm:py-16">
+    <nav aria-label="Breadcrumb" class="mb-6 flex items-center gap-2 text-sm text-slate-500">
+        <a href="{% url 'common:home' %}" class="transition-colors hover:text-indigo-600">Home</a>
+        <span class="text-slate-300">/</span>
+        <a href="{% url 'schools:schools_home' %}" class="transition-colors hover:text-indigo-600">Official Schools</a>
+        <span class="text-slate-300">/</span>
+        <span class="font-medium text-slate-800" aria-current="page">Delete school</span>
+    </nav>
+
+    <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+        <div class="h-1.5 bg-rose-600"></div>
+        <div class="p-6 sm:p-8">
+            <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-rose-100 bg-rose-50 text-rose-600">
+                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6"/></svg>
+            </div>
+            <h1 class="text-2xl font-extrabold tracking-tight text-slate-900">Delete this school?</h1>
+            <p class="mt-2 text-sm leading-6 text-slate-600">You’re about to permanently remove this school profile. This action cannot be undone.</p>
+
+            <div class="mt-6 flex items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                {% if school.logo %}
+                    <img src="{{ school.logo.url }}" alt="{{ school.name }} logo" class="h-12 w-12 shrink-0 rounded-xl border border-slate-200 object-cover">
+                {% else %}
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-lg font-bold text-indigo-600">{{ school.name|first|upper }}</div>
+                {% endif %}
+                <div class="min-w-0">
+                    <h2 class="break-words font-bold text-slate-900">{{ school.name }}</h2>
+                    <p class="mt-1 text-sm text-slate-500">{{ school.city }}, {{ school.country }}</p>
+                    <p class="mt-1 text-xs text-slate-500">{{ school.skills.count }} listed skill{{ school.skills.count|pluralize }}</p>
+                </div>
+            </div>
+
+            <div class="mt-5 flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800" role="alert">
+                <svg class="mt-0.5 h-5 w-5 shrink-0 text-rose-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+                <p><span class="font-semibold text-rose-900">Please note:</span> The school profile and its links to listed skills will be removed.</p>
+            </div>
+
+            <form method="post" class="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                {% csrf_token %}
+                <a href="{% url 'schools:detail' school.slug %}" class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Keep school</a>
+                <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6"/></svg>
+                    Delete school
+                </button>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}

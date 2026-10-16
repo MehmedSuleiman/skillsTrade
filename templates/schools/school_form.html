@@ -1,0 +1,55 @@
+<div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
+    <nav aria-label="Breadcrumb" class="mb-6 flex items-center gap-2 text-sm text-slate-500">
+        <a href="{% url 'common:home' %}" class="transition-colors hover:text-indigo-600">Home</a>
+        <span class="text-slate-300">/</span>
+        <a href="{% url 'schools:schools_home' %}" class="transition-colors hover:text-indigo-600">Official Schools</a>
+        <span class="text-slate-300">/</span>
+        <span class="font-medium text-slate-800" aria-current="page">{{ form_title }}</span>
+    </nav>
+
+    <div class="mb-7">
+        <p class="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-indigo-600">School profile</p>
+        <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">{{ form_title }}</h1>
+        <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{{ form_description }}</p>
+    </div>
+
+    <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+        <div class="h-1.5 bg-gradient-to-r from-indigo-600 via-violet-500 to-sky-400"></div>
+        <form method="post" enctype="multipart/form-data" class="space-y-6 p-6 sm:p-8
+            [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:w-full [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:rounded-xl [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:border [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:border-slate-300 [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:bg-white [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:px-4 [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:py-2.5 [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:text-sm [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:text-slate-800 [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:placeholder:text-slate-400 [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:focus:border-indigo-600 [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:focus:outline-none [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:focus:ring-2 [&_input:not([type=checkbox]):not([type=radio]):not([type=file])]:focus:ring-indigo-500/20
+            [&_select]:w-full [&_select]:rounded-xl [&_select]:border [&_select]:border-slate-300 [&_select]:bg-white [&_select]:px-4 [&_select]:py-2.5 [&_select]:text-sm [&_select]:text-slate-800 [&_select]:focus:border-indigo-600 [&_select]:focus:outline-none [&_select]:focus:ring-2 [&_select]:focus:ring-indigo-500/20
+            [&_textarea]:w-full [&_textarea]:resize-y [&_textarea]:rounded-xl [&_textarea]:border [&_textarea]:border-slate-300 [&_textarea]:bg-white [&_textarea]:px-4 [&_textarea]:py-3 [&_textarea]:text-sm [&_textarea]:leading-6 [&_textarea]:text-slate-800 [&_textarea]:placeholder:text-slate-400 [&_textarea]:focus:border-indigo-600 [&_textarea]:focus:outline-none [&_textarea]:focus:ring-2 [&_textarea]:focus:ring-indigo-500/20
+            [&_input[type=file]]:block [&_input[type=file]]:w-full [&_input[type=file]]:rounded-xl [&_input[type=file]]:border [&_input[type=file]]:border-slate-300 [&_input[type=file]]:bg-slate-50 [&_input[type=file]]:p-2 [&_input[type=file]]:text-sm [&_input[type=file]]:text-slate-500 [&_input[type=file]]:file:mr-4 [&_input[type=file]]:file:cursor-pointer [&_input[type=file]]:file:rounded-lg [&_input[type=file]]:file:border-0 [&_input[type=file]]:file:bg-indigo-50 [&_input[type=file]]:file:px-4 [&_input[type=file]]:file:py-2 [&_input[type=file]]:file:text-xs [&_input[type=file]]:file:font-semibold [&_input[type=file]]:file:text-indigo-700
+            [&_select[multiple]]:min-h-[140px] [&_select[multiple]]:p-2.5">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800" role="alert">
+                    <p class="mb-1 font-semibold">Please check the form details.</p>
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2">
+                {% for field in form.visible_fields %}
+                    <div class="{% if field.name == 'description' or field.name == 'address' or field.name == 'logo' or field.name == 'skills' %}sm:col-span-2{% endif %}">
+                        <label for="{{ field.id_for_label }}" class="mb-1.5 block text-sm font-semibold text-slate-800">
+                            {{ field.label }}{% if field.field.required %}<span class="ml-1 text-rose-500" aria-label="required">*</span>{% endif %}
+                        </label>
+                        {{ field }}
+                        {% if field.help_text %}<p class="mt-1.5 text-xs leading-5 text-slate-500">{{ field.help_text }}</p>{% endif %}
+                        {% if field.errors %}<p class="mt-1.5 text-xs font-medium text-rose-600" role="alert">{{ field.errors|striptags }}</p>{% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
+                <a href="{% if school %}{% url 'schools:detail' school.slug %}{% else %}{% url 'schools:schools_home' %}{% endif %}" class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Cancel</a>
+                <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+                    {{ submit_label }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

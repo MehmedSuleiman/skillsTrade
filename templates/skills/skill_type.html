@@ -25,7 +25,7 @@
                     {{ category_name|default:category }}
                 </h1>
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
-                    {{ skills|length }} skill{{ skills|length|pluralize }}
+                    {{ page_obj.paginator.count }} skill{{ page_obj.paginator.count|pluralize }}
                 </span>
             </div>
             <p class="mt-1.5 text-sm text-slate-600">
@@ -46,9 +46,9 @@
     {% include 'common/search_bar.html' %}
 
 
-    {% if skills %}
+    {% if page_obj %}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for skill in skills %}
+            {% for skill in page_obj %}
                 <div class="bg-white rounded-2xl border border-slate-200/90 hover:border-indigo-300 p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
                     <div>
 
@@ -109,16 +109,19 @@
                         <span class="text-slate-400">
                             {{ skill.created_at|date:"M d, Y" }}
                         </span>
-                        <span class="font-semibold text-indigo-600 group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
-                            Trade Skill
-                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </span>
+                        <a href="{% url "skills:detail" skill.slug  %}">
+                            <span class="font-semibold text-indigo-600 group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
+                                Trade Skill
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </span>
+                        </a>
                     </div>
                 </div>
             {% endfor %}
         </div>
+        {% include 'common/pagination.html' %}
     {% else %}
         <div class="bg-white rounded-2xl border border-slate-200/90 p-10 sm:p-14 text-center max-w-xl mx-auto shadow-sm">
             <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4 border border-indigo-100">

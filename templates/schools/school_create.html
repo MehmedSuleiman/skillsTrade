@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block title %}Add a School | SkillsTrade{% endblock %}
+
+{% block content %}
+    {% include 'schools/school_form.html' with form_title="Add a school" form_description="Introduce your school to the SkillsTrade community. Add accurate contact details and choose the skills learners can discover here." submit_label="Create school" %}
+{% endblock %}
