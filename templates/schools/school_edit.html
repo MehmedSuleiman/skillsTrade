@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit {{ school.name }} | SkillsTrade{% endblock %}
+
+{% block content %}
+    {% include 'schools/school_form.html' with form_title="Edit school profile" form_description="Update your school’s contact information, overview, and the skills it offers." submit_label="Save changes" school=school %}
+{% endblock %}

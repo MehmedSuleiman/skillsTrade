@@ -1,8 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from schools.models import School
-from skills.models import Skill
 
 
 class SkillCategory(models.TextChoices):
@@ -33,12 +31,14 @@ class TimeStampModel(models.Model):
 
 class SchoolSkill(models.Model):
     school = models.ForeignKey(
-        to =School,
+        'schools.School',
         on_delete=models.CASCADE,
+        related_name='school_skill',
     )
     skill = models.ForeignKey(
-        to= Skill,
-        on_delete=models.CASCADE
+        'skills.Skill',
+        on_delete=models.CASCADE,
+        related_name='school_skill',
     )
 
     def clean(self) -> None:

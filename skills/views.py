@@ -1,11 +1,10 @@
 from django.contrib import messages
-from django.db import models
+from django.core.paginator import Paginator
 from django.db.models import Q, F
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
-from django.views.generic.detail import _M
 
 from common.forms import SearchForm
 from common.models import SkillCategory
@@ -15,7 +14,7 @@ from skills.models import Skill
 
 # Create your views here.
 def skills_type_view(request : HttpRequest, skills_type) -> HttpResponse:
-    skills = Skill.objects.filter(category=skills_type).prefetch_related('related_skills')
+    skills = Skill.objects.filter(category=skills_type).prefetch_related('related_skills').order_by('-views')
     category_name = dict(SkillCategory.choices).get(skills_type, skills_type.title())
     search_form = SearchForm(request.GET or None)
 
@@ -24,13 +23,18 @@ def skills_type_view(request : HttpRequest, skills_type) -> HttpResponse:
             Q(name__icontains=search_form.cleaned_data['query'])
                 |
             Q(description__icontains=search_form.cleaned_data['query'])
-        )
+        ).order_by('-views')
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(skills, 15)
+    page_obj = paginator.get_page(page)
 
     context = {
         'skills': skills,
         'category': skills_type,
         'category_name': category_name,
         'search_form': search_form,
+        'page_obj': page_obj,
     }
     return render(request, 'skills/skill_type.html', context)
 
@@ -62,6 +66,6 @@ class SkillDetail(DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
-        obj.objects.update(views = F('views') + 1)
+        Skill.objects.filter(pk=obj.pk).update(views=F('views') + 1)
         return obj
 
