@@ -63,6 +63,8 @@ class CourseListView(ListView, FormView):
     model = Course
     template_name = 'schools/courses/course_list.html'
     form_class = SearchForm
+    paginate_by = 15
+    ordering = ['-views']
 
 
     def get_queryset(self):
