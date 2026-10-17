@@ -3,11 +3,11 @@ from django.db.models import Q, F
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView, FormView
 
 from common.forms import SearchForm
 from schools.forms import SchoolCreatingForm, SchoolUpdateForm
-from schools.models import School
+from schools.models import School, Course
 
 
 def schools_home_view(request : HttpRequest) -> HttpResponse:
@@ -58,3 +58,27 @@ class SchoolDelete(DeleteView):
     model = School
     template_name = 'schools/confirm_delete.html'
     success_url = reverse_lazy('schools:schools_home')
+
+class CourseListView(ListView, FormView):
+    model = Course
+    template_name = 'schools/courses/course_list.html'
+    form_class = SearchForm
+
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_form = SearchForm(self.request.GET or None)
+
+        if search_form.is_valid():
+            queryset = queryset.filter(
+                Q(title__icontains=search_form.cleaned_data['query'])
+                |
+                Q(description__icontains=search_form.cleaned_data['query'])
+                |
+                Q(school__name__icontains=search_form.cleaned_data['query'])
+            )
+
+        return queryset
+
+
+

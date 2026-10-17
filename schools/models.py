@@ -80,3 +80,39 @@ class School(TimeStampModel):
         super().save(*args, **kwargs)
         self.slug = slugify(f"{self.name}-{self.pk}")
         super().save(*args, **kwargs)
+
+class Course(TimeStampModel):
+    school = models.ForeignKey(
+        to =School,
+        on_delete=models.CASCADE,
+        related_name='courses',
+    )
+
+    title = models.CharField(
+        max_length=110
+    )
+    description = models.TextField(
+        validators=[
+            MinLengthValidator(20),
+        ]
+    )
+    url = models.URLField()
+
+    logo = models.ImageField(
+        upload_to='courses/logos/',
+    )
+
+    duration_weeks = models.PositiveIntegerField()
+
+    skills = models.ManyToManyField(
+        to = Skill
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    views = models.PositiveIntegerField(
+        default = 0,
+    )
+
