@@ -11,5 +11,9 @@ urlpatterns = [
     path('delete/<slug:slug>', views.SchoolDelete.as_view(), name='delete_school'),
     path('courses/', include([
         path('', views.CourseListView.as_view(), name='course_list'),
+        path('school/<slug:school_slug>/create/', views.CourseCreate.as_view(), name='school_course_create'),
+        path('<slug:slug>/edit/', views.CourseUpdate.as_view(), name='course_update'),
+        path('<slug:slug>/delete/', views.CourseDelete.as_view(), name='course_delete'),
+        path('<slug:slug>/', views.CourseDetailView.as_view(), name='course_detail'),
     ]))
 ]

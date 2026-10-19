@@ -1,12 +1,12 @@
 from django.core.paginator import Paginator
 from django.db.models import Q, F
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView, FormView
 
 from common.forms import SearchForm
-from schools.forms import SchoolCreatingForm, SchoolUpdateForm
+from schools.forms import SchoolCreatingForm, SchoolUpdateForm, CourseCreatingForm, CourseUpdateForm
 from schools.models import School, Course
 
 
@@ -36,6 +36,10 @@ def schools_home_view(request : HttpRequest) -> HttpResponse:
 class SchoolDetailView(DetailView):
     model = School
     template_name = 'schools/school_detail.html'
+
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('skills', 'courses').order_by(
+            '-views')
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
@@ -83,4 +87,65 @@ class CourseListView(ListView, FormView):
         return queryset
 
 
+class CourseDetailView(DetailView):
+    model = Course
+    template_name = 'schools/courses/course_detail.html'
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('school').prefetch_related('skills')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        Course.objects.filter(pk=obj.pk).update(views=F('views') + 1)
+        return obj
+
+class CourseCreate(CreateView):
+    model = Course
+    form_class = CourseCreatingForm
+    template_name = 'schools/courses/course_create.html'
+
+    def get_school(self):
+        return get_object_or_404(School, slug=self.kwargs['school_slug'])
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        school = self.get_school()
+        if school:
+            form.fields['school'].initial = school.pk
+            form.fields['school'].disabled = True
+        return form
+
+    def form_valid(self, form):
+        school = self.get_school()
+        if school:
+            form.instance.school = school
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['school'] = self.get_school()
+        return context
+
+    def get_success_url(self):
+        return reverse('schools:course_detail', kwargs={'slug': self.object.slug})
+
+
+class CourseUpdate(UpdateView):
+    model = Course
+    form_class = CourseUpdateForm
+    template_name = 'schools/courses/course_edit.html'
+
+    def get_success_url(self):
+        return reverse('schools:course_detail', kwargs={'slug': self.object.slug})
+
+
+class CourseDelete(DeleteView):
+    model = Course
+    template_name = 'schools/courses/course_confirm_delete.html'
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('school')
+
+    def get_success_url(self):
+        return reverse('schools:detail', kwargs={'slug': self.object.school.slug})
 
