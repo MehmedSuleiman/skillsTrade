@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block title %}Add a Course | SkillsTrade{% endblock %}
+
+{% block content %}
+    {% include 'schools/courses/course_form.html' with form_title="Add a course" form_description="Share a course from this school with learners. The school is already selected; add the course details and skills it covers." submit_label="Create course" %}
+{% endblock %}

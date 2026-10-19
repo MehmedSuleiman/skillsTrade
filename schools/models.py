@@ -112,7 +112,22 @@ class Course(TimeStampModel):
         default=True
     )
 
-    views = models.PositiveIntegerField(
-        default = 0,
+    slug = models.SlugField(
+        unique=True,
     )
+
+    views = models.PositiveIntegerField(
+        default=0,
+    )
+
+    def __str__(self) -> str:
+        return self.title
+
+    def __repr__(self) -> str:
+        return self.title
+
+    def save(self, *args, **kwargs) -> None:
+        super().save(*args, **kwargs)
+        self.slug = slugify(f"{self.title}-{self.pk}")
+        super().save(*args, **kwargs)
 

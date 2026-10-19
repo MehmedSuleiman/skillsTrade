@@ -64,6 +64,10 @@ class SkillDetail(DetailView):
     model = Skill
     template_name = 'skills/skill_detail.html'
 
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('related_skills', 'course_set__school').order_by(
+            '-views')
+
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         Skill.objects.filter(pk=obj.pk).update(views=F('views') + 1)

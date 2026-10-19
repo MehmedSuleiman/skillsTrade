@@ -66,6 +66,35 @@
                                 </div>
                             </div>
                         {% endif %}
+
+                        {% with courses=skill.course_set.all %}
+                            <section class="mt-8 border-t border-slate-100 pt-7">
+                                <div class="mb-4 flex flex-wrap items-end justify-between gap-2">
+                                    <div>
+                                        <h2 class="text-lg font-bold text-slate-900">Related courses</h2>
+                                        <p class="mt-1 text-sm text-slate-500">Courses that teach or use {{ skill.name }}.</p>
+                                    </div>
+                                    <span class="rounded-full border border-indigo-100 bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-700">{{ courses|length }} course{{ courses|length|pluralize }}</span>
+                                </div>
+                                {% if courses %}
+                                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                        {% for course in courses %}
+                                            <article class="rounded-2xl border border-slate-200 p-4">
+                                                <h3 class="text-sm font-semibold text-slate-800">{{ course.title }}</h3>
+                                                <p class="mt-1 text-sm leading-6 text-slate-600">{{ course.description|truncatewords:24 }}</p>
+                                                <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs font-medium text-slate-500">
+                                                    <a href="{% url 'schools:detail' course.school.slug %}" class="text-indigo-600 hover:text-indigo-700">{{ course.school.name }}</a>
+                                                    <span>{{ course.duration_weeks }} week{{ course.duration_weeks|pluralize }}</span>
+                                                </div>
+                                                {% if course.url %}<a href="{% url 'schools:course_detail' course.slug %}" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex text-sm font-semibold text-indigo-600 hover:text-indigo-700">Visit course <span class="ml-1" aria-hidden="true">↗</span></a>{% endif %}
+                                            </article>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <p class="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-5 py-8 text-center text-sm text-slate-500">No courses are associated with this skill yet.</p>
+                                {% endif %}
+                            </section>
+                        {% endwith %}
                     </div>
                 </article>
 

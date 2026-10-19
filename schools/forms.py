@@ -1,6 +1,6 @@
 from django import forms
 
-from schools.models import School
+from schools.models import School, Course
 
 
 class BaseSchoolForm(forms.ModelForm):
@@ -119,6 +119,86 @@ class SchoolUpdateForm(BaseSchoolForm):
         help_texts = {
             **SchoolCreatingForm.Meta.help_texts,
             'name': 'School names cannot be changed after creation.',
+        }
+
+
+class BaseCourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        exclude = [
+            'is_active',
+            'slug',
+            'views',
+            'created_at',
+            'updated_at',
+        ]
+        labels = {
+            'school': 'School',
+            'title': 'Course Title',
+            'description': 'Course Description',
+            'url': 'Course Website',
+            'logo': 'Course Image',
+            'duration_weeks': 'Duration (Weeks)',
+            'skills': 'Skills Covered',
+        }
+        help_texts = {
+            'school': 'Choose the school that offers this course.',
+            'title': 'Use a clear title that learners can find easily.',
+            'description': 'Explain what learners will study and be able to do (at least 20 characters).',
+            'url': 'Enter the full course web address, including https://.',
+            'logo': 'Optional. Upload an image to represent this course.',
+            'duration_weeks': 'Enter the course length in weeks.',
+            'skills': 'Select the skills covered by this course. Use Ctrl or Cmd to select multiple skills.',
+        }
+        widgets = {
+            'school': forms.Select(),
+            'title': forms.TextInput(attrs={
+                'placeholder': 'e.g. Introduction to Web Development',
+            }),
+            'description': forms.Textarea(attrs={
+                'placeholder': 'Describe the course, topics, and learning outcomes...',
+                'rows': 5,
+            }),
+            'url': forms.URLInput(attrs={
+                'placeholder': 'https://example.edu/course',
+                'autocomplete': 'url',
+            }),
+            'logo': forms.ClearableFileInput(attrs={
+                'accept': 'image/*',
+            }),
+            'duration_weeks': forms.NumberInput(attrs={
+                'placeholder': 'e.g. 8',
+                'min': 1,
+                'inputmode': 'numeric',
+            }),
+            'skills': forms.SelectMultiple(attrs={
+                'size': 6,
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['logo'].required = False
+        self.fields['school'].queryset = School.objects.order_by('name')
+        self.fields['skills'].queryset = self.fields['skills'].queryset.order_by('name')
+
+
+class CourseCreatingForm(BaseCourseForm):
+    ...
+
+
+class CourseUpdateForm(BaseCourseForm):
+    class Meta(BaseCourseForm.Meta):
+        widgets = {
+            **BaseCourseForm.Meta.widgets,
+            'title': forms.TextInput(attrs={
+                'placeholder': 'e.g. Introduction to Web Development',
+                'readonly': 'readonly',
+            }),
+        }
+        help_texts = {
+            **BaseCourseForm.Meta.help_texts,
+            'title': 'Course titles cannot be changed after creation.',
         }
 
 

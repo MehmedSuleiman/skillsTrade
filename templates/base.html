@@ -25,13 +25,13 @@
                 <a href="{% url 'schools:course_list' %}" class="text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 px-3 py-2 rounded-lg transition-colors">Courses</a>
                 <a href="{% url 'schools:schools_home' %}" class="text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 px-3 py-2 rounded-lg transition-colors">Official Schools</a>
                 <a href="{% url 'skills:create-skill' %}" class="inline-flex items-center text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg shadow-sm transition-colors">Post Skill</a>
-                <a href="/" class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-700 hover:text-indigo-600 hover:bg-slate-50 px-3 py-2 rounded-lg border border-slate-200 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-slate-500 ai ai-Person">
-                        <circle cx="12" cy="7" r="5"/>
-                        <path d="M17 14h.352a3 3 0 0 1 2.976 2.628l.391 3.124A2 2 0 0 1 18.734 22H5.266a2 2 0 0 1-1.985-2.248l.39-3.124A3 3 0 0 1 6.649 14H7"/>
-                    </svg>
-                    Account
-                </a>
+{#                <a href="/" class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-700 hover:text-indigo-600 hover:bg-slate-50 px-3 py-2 rounded-lg border border-slate-200 transition-colors">#}
+{#                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-slate-500 ai ai-Person">#}
+{#                        <circle cx="12" cy="7" r="5"/>#}
+{#                        <path d="M17 14h.352a3 3 0 0 1 2.976 2.628l.391 3.124A2 2 0 0 1 18.734 22H5.266a2 2 0 0 1-1.985-2.248l.39-3.124A3 3 0 0 1 6.649 14H7"/>#}
+{#                    </svg>#}
+{#                    Account#}
+{#                </a>#}
             </div>
         </nav>
     </header>
@@ -87,21 +87,21 @@
                         <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wider mb-4">Platform</h3>
                         <ul class="space-y-2.5 text-sm">
                             <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Browse Skills</a></li>
-                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Official Schools</a></li>
-                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Post a Skill</a></li>
-                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">How It Works</a></li>
+                            <li><a href="{% url 'schools:schools_home' %}" class="text-slate-600 hover:text-indigo-600 transition-colors">Official Schools</a></li>
+                            <li><a href="{% url 'skills:create-skill' %}" class="text-slate-600 hover:text-indigo-600 transition-colors">Post a Skill</a></li>
+                            <li><a href="{% url 'schools:course_list' %}" class="text-slate-600 hover:text-indigo-600 transition-colors">Courses</a></li>
                         </ul>
                     </div>
 
-                    <div>
-                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wider mb-4">Community</h3>
-                        <ul class="space-y-2.5 text-sm">
-                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Skill Swappers</a></li>
-                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Community Rules</a></li>
-                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Help Center</a></li>
-                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Safety Tips</a></li>
-                        </ul>
-                    </div>
+{#                    <div>#}
+{#                        <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-wider mb-4">Community</h3>#}
+{#                        <ul class="space-y-2.5 text-sm">#}
+{#                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Skill Swappers</a></li>#}
+{#                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Community Rules</a></li>#}
+{#                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Help Center</a></li>#}
+{#                            <li><a href="/" class="text-slate-600 hover:text-indigo-600 transition-colors">Safety Tips</a></li>#}
+{#                        </ul>#}
+{#                    </div>#}
                 </div>
             </div>
 
