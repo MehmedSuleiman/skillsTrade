@@ -3,34 +3,34 @@
 {% block title %}Delete {{ course.title }} | SkillsTrade{% endblock %}
 
 {% block content %}
-<div class="mx-auto max-w-xl px-4 py-10 sm:px-6 sm:py-16">
-    <nav aria-label="Breadcrumb" class="mb-6 flex items-center gap-2 text-sm text-slate-500">
-        <a href="{% url 'common:home' %}" class="transition-colors hover:text-indigo-600">Home</a>
-        <span class="text-slate-300">/</span>
-        <a href="{% url 'schools:detail' course.school.slug %}" class="transition-colors hover:text-indigo-600">{{ course.school.name }}</a>
-        <span class="text-slate-300">/</span>
-        <span class="font-medium text-slate-800" aria-current="page">Delete course</span>
+<div class="st-mx-auto st-max-w-xl st-px-4 st-py-10 st-sm-px-6 st-sm-py-16">
+    <nav aria-label="Breadcrumb" class="st-mb-6 st-flex st-items-center st-gap-2 st-text-sm st-text-slate-500">
+        <a href="{% url 'common:home' %}" class="st-transition-colors st-hover-text-indigo-600">Home</a>
+        <span class="st-text-slate-300">/</span>
+        <a href="{% url 'schools:detail' course.school.slug %}" class="st-transition-colors st-hover-text-indigo-600">{{ course.school.name }}</a>
+        <span class="st-text-slate-300">/</span>
+        <span class="st-font-medium st-text-slate-800" aria-current="page">Delete course</span>
     </nav>
 
-    <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-        <div class="h-1.5 bg-rose-600"></div>
-        <div class="p-6 sm:p-8">
-            <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-rose-100 bg-rose-50 text-rose-600">
-                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6"/></svg>
+    <section class="st-overflow-hidden st-rounded-3xl st-border st-border-slate-200 st-bg-white st-shadow-sm">
+        <div class="st-h-1-5 st-bg-rose-600"></div>
+        <div class="st-p-6 st-sm-p-8">
+            <div class="st-mb-5 st-flex st-h-14 st-w-14 st-items-center st-justify-center st-rounded-2xl st-border st-border-rose-100 st-bg-rose-50 st-text-rose-600">
+                <svg class="st-h-7 st-w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6"/></svg>
             </div>
-            <h1 class="text-2xl font-extrabold tracking-tight text-slate-900">Delete this course?</h1>
-            <p class="mt-2 text-sm leading-6 text-slate-600">This will permanently remove the course listing and its course-to-skill links.</p>
+            <h1 class="st-text-2xl st-font-extrabold st-tracking-tight st-text-slate-900">Delete this course?</h1>
+            <p class="st-mt-2 st-text-sm st-leading-6 st-text-slate-600">This will permanently remove the course listing and its course-to-skill links.</p>
 
-            <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <h2 class="break-words font-bold text-slate-900">{{ course.title }}</h2>
-                <p class="mt-1 text-sm text-slate-500">Offered by {{ course.school.name }}</p>
-                <p class="mt-1 text-xs text-slate-500">{{ course.duration_weeks }} week{{ course.duration_weeks|pluralize }}</p>
+            <div class="st-mt-6 st-rounded-2xl st-border st-border-slate-200 st-bg-slate-50 st-p-4">
+                <h2 class="st-break-words st-font-bold st-text-slate-900">{{ course.title }}</h2>
+                <p class="st-mt-1 st-text-sm st-text-slate-500">Offered by {{ course.school.name }}</p>
+                <p class="st-mt-1 st-text-xs st-text-slate-500">{{ course.duration_weeks }} week{{ course.duration_weeks|pluralize }}</p>
             </div>
 
-            <form method="post" class="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+            <form method="post" class="st-mt-8 st-flex st-flex-col-reverse st-gap-3 st-sm-flex-row st-sm-justify-end">
                 {% csrf_token %}
-                <a href="{% url 'schools:course_detail' course.slug %}" class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Keep course</a>
-                <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-rose-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">Delete course</button>
+                <a href="{% url 'schools:course_detail' course.slug %}" class="st-inline-flex st-items-center st-justify-center st-rounded-xl st-border st-border-slate-300 st-px-5 st-py-2-5 st-text-sm st-font-semibold st-text-slate-700 st-transition st-hover-bg-slate-50">Keep course</a>
+                <button type="submit" class="st-inline-flex st-items-center st-justify-center st-rounded-xl st-bg-rose-600 st-px-5 st-py-2-5 st-text-sm st-font-semibold st-text-white st-shadow-sm st-transition st-hover-bg-rose-700 st-focus-outline-none st-focus-ring-2 st-focus-ring-rose-500 st-focus-ring-offset-2">Delete course</button>
             </form>
         </div>
     </section>

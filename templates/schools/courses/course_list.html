@@ -3,73 +3,73 @@
 {% block title %}Courses | SkillsTrade{% endblock %}
 
 {% block content %}
-<section class="relative overflow-hidden bg-gradient-to-br from-indigo-950 via-indigo-900 to-slate-900">
-    <div class="absolute inset-0 opacity-20" aria-hidden="true">
-        <div class="absolute -right-20 -top-32 h-96 w-96 rounded-full bg-indigo-400 blur-3xl"></div>
-        <div class="absolute -bottom-40 left-1/4 h-80 w-80 rounded-full bg-sky-400 blur-3xl"></div>
+<section class="st-relative st-overflow-hidden st-bg-gradient-to-br st-from-indigo-950 st-via-indigo-900 st-to-slate-900">
+    <div class="st-absolute st-inset-0 st-opacity-20" aria-hidden="true">
+        <div class="st-absolute st--right-20 st--top-32 st-h-96 st-w-96 st-rounded-full st-bg-indigo-400 st-blur-3xl"></div>
+        <div class="st-absolute st--bottom-40 st-left-1-slash-4 st-h-80 st-w-80 st-rounded-full st-bg-sky-400 st-blur-3xl"></div>
     </div>
-    <div class="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
-        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-200">Learn something new</p>
-        <div class="mt-3 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <div class="max-w-2xl">
-                <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-5xl">Courses for your next step</h1>
-                <p class="mt-4 max-w-xl text-base leading-relaxed text-indigo-100 sm:text-lg">Explore practical learning programs from schools and communities across Bulgaria.</p>
+    <div class="st-relative st-mx-auto st-max-w-7xl st-px-4 st-py-14 st-sm-px-6 st-sm-py-20 st-lg-px-8">
+        <p class="st-text-sm st-font-semibold st-uppercase st-tracking-0-2em st-text-indigo-200">Learn something new</p>
+        <div class="st-mt-3 st-flex st-flex-col st-gap-6 st-sm-flex-row st-sm-items-end st-sm-justify-between">
+            <div class="st-max-w-2xl">
+                <h1 class="st-text-3xl st-font-extrabold st-tracking-tight st-text-white st-sm-text-5xl">Courses for your next step</h1>
+                <p class="st-mt-4 st-max-w-xl st-text-base st-leading-relaxed st-text-indigo-100 st-sm-text-lg">Explore practical learning programs from schools and communities across Bulgaria.</p>
             </div>
-            <div class="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur">
-                <svg class="h-4 w-4 text-indigo-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z"/></svg>
+            <div class="st-inline-flex st-w-fit st-items-center st-gap-2 st-rounded-full st-border st-border-white-slash-15 st-bg-white-slash-10 st-px-4 st-py-2 st-text-sm st-font-medium st-text-white st-backdrop-blur">
+                <svg class="st-h-4 st-w-4 st-text-indigo-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z"/></svg>
                 {{ object_list|length }} course{{ object_list|length|pluralize }} available
             </div>
         </div>
-        <form method="get" class="mt-8 flex max-w-xl gap-2 rounded-2xl bg-white p-2 shadow-xl shadow-indigo-950/20">
-            <label for="course-search" class="sr-only">Search courses</label>
-            <div class="flex flex-1 items-center gap-3 px-3 text-slate-400">
-                <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="m20 20-4-4"/></svg>
-                <input id="course-search" name="query" type="search" value="{{ request.GET.query }}" placeholder="Search courses or schools" class="w-full border-0 bg-transparent py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-0">
+        <form method="get" class="st-mt-8 st-flex st-max-w-xl st-gap-2 st-rounded-2xl st-bg-white st-p-2 st-shadow-xl st-shadow-indigo-950-slash-20">
+            <label for="course-search" class="st-sr-only">Search courses</label>
+            <div class="st-flex st-flex-1 st-items-center st-gap-3 st-px-3 st-text-slate-400">
+                <svg class="st-h-5 st-w-5 st-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="m20 20-4-4"/></svg>
+                <input id="course-search" name="query" type="search" value="{{ request.GET.query }}" placeholder="Search courses or schools" class="st-w-full st-border-0 st-bg-transparent st-py-2 st-text-sm st-text-slate-900 st-placeholder-text-slate-400 st-focus-outline-none st-focus-ring-0">
             </div>
-            <button type="submit" class="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Search</button>
+            <button type="submit" class="st-rounded-xl st-bg-indigo-600 st-px-5 st-py-2-5 st-text-sm st-font-semibold st-text-white st-transition st-hover-bg-indigo-700 st-focus-outline-none st-focus-ring-2 st-focus-ring-indigo-500 st-focus-ring-offset-2">Search</button>
         </form>
     </div>
 </section>
 
-<section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8" aria-label="Available courses">
+<section class="st-mx-auto st-max-w-7xl st-px-4 st-py-10 st-sm-px-6 st-sm-py-14 st-lg-px-8" aria-label="Available courses">
     {% if object_list %}
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div class="st-grid st-grid-cols-1 st-gap-6 st-md-grid-cols-2 st-xl-grid-cols-3">
             {% for course in object_list %}
-                <article class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-lg hover:shadow-indigo-950/5">
-                    <div class="relative flex h-44 items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-50 via-slate-50 to-sky-50">
+                <article class="st-group st-flex st-h-full st-flex-col st-overflow-hidden st-rounded-2xl st-border st-border-slate-200 st-bg-white st-shadow-sm st-transition st-duration-200 st-hover--translate-y-1 st-hover-border-indigo-200 st-hover-shadow-lg st-hover-shadow-indigo-950-slash-5">
+                    <div class="st-relative st-flex st-h-44 st-items-center st-justify-center st-overflow-hidden st-bg-gradient-to-br st-from-indigo-50 st-via-slate-50 st-to-sky-50">
                         {% if course.logo %}
-                            <img src="{{ course.logo.url }}" alt="{{ course.title }}" class="h-full w-full object-cover transition duration-300 group-hover:scale-105">
+                            <img src="{{ course.logo.url }}" alt="{{ course.title }}" class="st-h-full st-w-full st-object-cover st-transition st-duration-300 st-group-hover-scale-105">
                         {% else %}
-                            <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-indigo-600 shadow-sm ring-1 ring-indigo-100">
-                                <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+                            <div class="st-flex st-h-16 st-w-16 st-items-center st-justify-center st-rounded-2xl st-bg-white st-text-indigo-600 st-shadow-sm st-ring-1 st-ring-indigo-100">
+                                <svg class="st-h-8 st-w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
                             </div>
                         {% endif %}
-                        <span class="absolute left-4 top-4 rounded-full border border-white/70 bg-white/90 px-3 py-1 text-xs font-semibold text-indigo-700 shadow-sm backdrop-blur">{{ course.duration_weeks }} week{{ course.duration_weeks|pluralize }}</span>
+                        <span class="st-absolute st-left-4 st-top-4 st-rounded-full st-border st-border-white-slash-70 st-bg-white-slash-90 st-px-3 st-py-1 st-text-xs st-font-semibold st-text-indigo-700 st-shadow-sm st-backdrop-blur">{{ course.duration_weeks }} week{{ course.duration_weeks|pluralize }}</span>
                     </div>
 
-                    <div class="flex flex-1 flex-col p-5 sm:p-6">
-                        <div class="mb-3 flex items-center gap-2 text-xs font-medium text-slate-500">
-                            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-50 font-bold text-indigo-700">{{ course.school.name|first|upper }}</span>
-                            <span class="line-clamp-1">{{ course.school.name }}</span>
+                    <div class="st-flex st-flex-1 st-flex-col st-p-5 st-sm-p-6">
+                        <div class="st-mb-3 st-flex st-items-center st-gap-2 st-text-xs st-font-medium st-text-slate-500">
+                            <span class="st-flex st-h-7 st-w-7 st-items-center st-justify-center st-rounded-lg st-bg-indigo-50 st-font-bold st-text-indigo-700">{{ course.school.name|first|upper }}</span>
+                            <span class="st-line-clamp-1">{{ course.school.name }}</span>
                         </div>
-                        <h2 class="text-lg font-bold leading-snug text-slate-900 group-hover:text-indigo-700">{{ course.title }}</h2>
-                        <p class="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-slate-600">{{ course.description }}</p>
+                        <h2 class="st-text-lg st-font-bold st-leading-snug st-text-slate-900 st-group-hover-text-indigo-700">{{ course.title }}</h2>
+                        <p class="st-mt-2 st-line-clamp-3 st-flex-1 st-text-sm st-leading-relaxed st-text-slate-600">{{ course.description }}</p>
 
                         {% with course_skills=course.skills.all %}
                             {% if course_skills %}
-                                <div class="mt-5 flex flex-wrap gap-1.5">
+                                <div class="st-mt-5 st-flex st-flex-wrap st-gap-1-5">
                                     {% for skill in course_skills|slice:":3" %}
-                                        <span class="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">{{ skill.name }}</span>
+                                        <span class="st-rounded-lg st-bg-slate-100 st-px-2-5 st-py-1 st-text-xs st-font-medium st-text-slate-600">{{ skill.name }}</span>
                                     {% endfor %}
-                                    {% if course_skills|length > 3 %}<span class="px-1 py-1 text-xs text-slate-500">+{{ course_skills|length|add:"-3" }}</span>{% endif %}
+                                    {% if course_skills|length > 3 %}<span class="st-px-1 st-py-1 st-text-xs st-text-slate-500">+{{ course_skills|length|add:"-3" }}</span>{% endif %}
                                 </div>
                             {% endif %}
                         {% endwith %}
 
-                        <div class="mt-6 border-t border-slate-100 pt-4">
-                            <a href="{% url 'schools:course_detail' course.slug %}" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-label="Details for {{ course.title }}">
+                        <div class="st-mt-6 st-border-t st-border-slate-100 st-pt-4">
+                            <a href="{% url 'schools:course_detail' course.slug %}" class="st-inline-flex st-w-full st-items-center st-justify-center st-gap-2 st-rounded-xl st-bg-indigo-600 st-px-4 st-py-2-5 st-text-sm st-font-semibold st-text-white st-shadow-sm st-transition st-hover-bg-indigo-700 st-focus-outline-none st-focus-ring-2 st-focus-ring-indigo-500 st-focus-ring-offset-2" aria-label="Details for {{ course.title }}">
                                     View details
-                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"/></svg>
+                                    <svg class="st-h-4 st-w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"/></svg>
                             </a>
                         </div>
                     </div>
@@ -77,13 +77,13 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
-            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
-                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+        <div class="st-rounded-2xl st-border st-border-dashed st-border-slate-300 st-bg-white st-px-6 st-py-16 st-text-center">
+            <div class="st-mx-auto st-flex st-h-14 st-w-14 st-items-center st-justify-center st-rounded-2xl st-bg-indigo-50 st-text-indigo-600">
+                <svg class="st-h-7 st-w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
             </div>
-            <h2 class="mt-4 text-lg font-bold text-slate-900">No courses found</h2>
-            <p class="mt-1 text-sm text-slate-500">Try another search, or check back later for new learning opportunities.</p>
-            {% if request.GET.query %}<a href="{% url 'schools:course_list' %}" class="mt-5 inline-flex rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Clear search</a>{% endif %}
+            <h2 class="st-mt-4 st-text-lg st-font-bold st-text-slate-900">No courses found</h2>
+            <p class="st-mt-1 st-text-sm st-text-slate-500">Try another search, or check back later for new learning opportunities.</p>
+            {% if request.GET.query %}<a href="{% url 'schools:course_list' %}" class="st-mt-5 st-inline-flex st-rounded-xl st-border st-border-slate-200 st-px-4 st-py-2 st-text-sm st-font-semibold st-text-slate-700 st-transition st-hover-bg-slate-50">Clear search</a>{% endif %}
         </div>
     {% endif %}
 </section>

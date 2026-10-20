@@ -3,51 +3,51 @@
 {% block title %}{{ course.title }} | SkillsTrade{% endblock %}
 
 {% block content %}
-<main class="relative isolate overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-slate-50">
-    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <nav aria-label="Breadcrumb" class="mb-8 flex items-center gap-2 text-sm text-slate-500">
-            <a href="{% url 'common:home' %}" class="hover:text-indigo-600">Home</a>
+<main class="st-relative st-isolate st-overflow-hidden st-bg-gradient-to-br st-from-indigo-50 st-via-white st-to-slate-50">
+    <div class="st-mx-auto st-max-w-6xl st-px-4 st-py-8 st-sm-px-6 st-sm-py-12 st-lg-px-8">
+        <nav aria-label="Breadcrumb" class="st-mb-8 st-flex st-items-center st-gap-2 st-text-sm st-text-slate-500">
+            <a href="{% url 'common:home' %}" class="st-hover-text-indigo-600">Home</a>
             <span>/</span>
-            <a href="{% url 'schools:course_list' %}" class="hover:text-indigo-600">Courses</a>
+            <a href="{% url 'schools:course_list' %}" class="st-hover-text-indigo-600">Courses</a>
             <span>/</span>
-            <span class="truncate font-medium text-slate-800" aria-current="page">{{ course.title }}</span>
+            <span class="st-truncate st-font-medium st-text-slate-800" aria-current="page">{{ course.title }}</span>
         </nav>
 
-        <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-3 lg:gap-8">
-            <article class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm lg:col-span-2">
-                <div class="h-2 bg-gradient-to-r from-indigo-500 via-violet-500 to-sky-400"></div>
-                {% if course.logo %}<img src="{{ course.logo.url }}" alt="{{ course.title }}" class="h-64 w-full object-cover">{% endif %}
-                <div class="p-6 sm:p-10">
-                    <a href="{% url 'schools:detail' course.school.slug %}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-700">{{ course.school.name }} · {{ course.school.city }}, {{ course.school.country }}</a>
-                    <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">{{ course.title }}</h1>
-                    <p class="mt-5 whitespace-pre-line leading-7 text-slate-600">{{ course.description }}</p>
+        <div class="st-grid st-grid-cols-1 st-items-start st-gap-6 st-lg-grid-cols-3 st-lg-gap-8">
+            <article class="st-overflow-hidden st-rounded-3xl st-border st-border-slate-200 st-bg-white st-shadow-sm st-lg-col-span-2">
+                <div class="st-h-2 st-bg-gradient-to-r st-from-indigo-500 st-via-violet-500 st-to-sky-400"></div>
+                {% if course.logo %}<img src="{{ course.logo.url }}" alt="{{ course.title }}" class="st-h-64 st-w-full st-object-cover">{% endif %}
+                <div class="st-p-6 st-sm-p-10">
+                    <a href="{% url 'schools:detail' course.school.slug %}" class="st-text-sm st-font-semibold st-text-indigo-600 st-hover-text-indigo-700">{{ course.school.name }} · {{ course.school.city }}, {{ course.school.country }}</a>
+                    <h1 class="st-mt-3 st-text-3xl st-font-extrabold st-tracking-tight st-text-slate-900 st-sm-text-4xl">{{ course.title }}</h1>
+                    <p class="st-mt-5 st-whitespace-pre-line st-leading-7 st-text-slate-600">{{ course.description }}</p>
 
-                    <section class="mt-8 border-t border-slate-100 pt-7">
-                        <h2 class="mb-4 text-lg font-bold text-slate-900">Skills covered</h2>
+                    <section class="st-mt-8 st-border-t st-border-slate-100 st-pt-7">
+                        <h2 class="st-mb-4 st-text-lg st-font-bold st-text-slate-900">Skills covered</h2>
                         {% with skills=course.skills.all %}
                             {% if skills %}
-                                <div class="flex flex-wrap gap-2">
-                                    {% for skill in skills %}<a href="{% url 'skills:detail' skill.slug %}" class="rounded-xl border border-indigo-100 bg-indigo-50 px-3 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-100">{{ skill.name }}</a>{% endfor %}
+                                <div class="st-flex st-flex-wrap st-gap-2">
+                                    {% for skill in skills %}<a href="{% url 'skills:detail' skill.slug %}" class="st-rounded-xl st-border st-border-indigo-100 st-bg-indigo-50 st-px-3 st-py-2 st-text-sm st-font-medium st-text-indigo-700 st-hover-bg-indigo-100">{{ skill.name }}</a>{% endfor %}
                                 </div>
-                            {% else %}<p class="text-sm text-slate-500">Skills have not been added to this course yet.</p>{% endif %}
+                            {% else %}<p class="st-text-sm st-text-slate-500">Skills have not been added to this course yet.</p>{% endif %}
                         {% endwith %}
                     </section>
                 </div>
             </article>
 
-            <aside class="space-y-5">
-                <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Course details</h2>
-                    <dl class="mt-4 divide-y divide-slate-100">
-                        <div class="flex justify-between gap-4 py-3"><dt class="text-sm text-slate-500">Duration</dt><dd class="text-sm font-semibold text-slate-800">{{ course.duration_weeks }} week{{ course.duration_weeks|pluralize }}</dd></div>
-                        <div class="flex justify-between gap-4 py-3"><dt class="text-sm text-slate-500">Status</dt><dd class="text-sm font-semibold {% if course.is_active %}text-emerald-700{% else %}text-slate-500{% endif %}">{% if course.is_active %}Active{% else %}Inactive{% endif %}</dd></div>
-                        <div class="flex justify-between gap-4 py-3"><dt class="text-sm text-slate-500">Views</dt><dd class="text-sm font-semibold text-slate-800">{{ course.views }}</dd></div>
+            <aside class="st-space-y-5">
+                <section class="st-rounded-3xl st-border st-border-slate-200 st-bg-white st-p-6 st-shadow-sm">
+                    <h2 class="st-text-sm st-font-semibold st-uppercase st-tracking-wider st-text-slate-500">Course details</h2>
+                    <dl class="st-mt-4 st-divide-y st-divide-slate-100">
+                        <div class="st-flex st-justify-between st-gap-4 st-py-3"><dt class="st-text-sm st-text-slate-500">Duration</dt><dd class="st-text-sm st-font-semibold st-text-slate-800">{{ course.duration_weeks }} week{{ course.duration_weeks|pluralize }}</dd></div>
+                        <div class="st-flex st-justify-between st-gap-4 st-py-3"><dt class="st-text-sm st-text-slate-500">Status</dt><dd class="st-text-sm st-font-semibold {% if course.is_active %}text-emerald-700{% else %}text-slate-500{% endif %}">{% if course.is_active %}Active{% else %}Inactive{% endif %}</dd></div>
+                        <div class="st-flex st-justify-between st-gap-4 st-py-3"><dt class="st-text-sm st-text-slate-500">Views</dt><dd class="st-text-sm st-font-semibold st-text-slate-800">{{ course.views }}</dd></div>
                     </dl>
-                    <a href="{{ course.url }}" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-700">Visit course <span aria-hidden="true">↗</span></a>
-                    <a href="{% url 'schools:course_update' course.slug %}" class="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-700 hover:bg-indigo-100">Edit course</a>
-                    <a href="{% url 'schools:course_delete' course.slug %}" class="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 hover:bg-rose-100">Delete course</a>
+                    <a href="{{ course.url }}" target="_blank" rel="noopener noreferrer" class="st-mt-5 st-inline-flex st-w-full st-items-center st-justify-center st-gap-2 st-rounded-xl st-bg-indigo-600 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-white st-hover-bg-indigo-700">Visit course <span aria-hidden="true">↗</span></a>
+                    <a href="{% url 'schools:course_update' course.slug %}" class="st-mt-3 st-inline-flex st-w-full st-items-center st-justify-center st-rounded-xl st-border st-border-indigo-200 st-bg-indigo-50 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-indigo-700 st-hover-bg-indigo-100">Edit course</a>
+                    <a href="{% url 'schools:course_delete' course.slug %}" class="st-mt-3 st-inline-flex st-w-full st-items-center st-justify-center st-rounded-xl st-border st-border-rose-200 st-bg-rose-50 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-rose-700 st-hover-bg-rose-100">Delete course</a>
                 </section>
-                <a href="{% url 'schools:course_list' %}" class="inline-flex items-center gap-2 px-1 text-sm font-medium text-slate-500 hover:text-indigo-600">← Back to all courses</a>
+                <a href="{% url 'schools:course_list' %}" class="st-inline-flex st-items-center st-gap-2 st-px-1 st-text-sm st-font-medium st-text-slate-500 st-hover-text-indigo-600">← Back to all courses</a>
             </aside>
         </div>
     </div>
