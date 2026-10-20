@@ -1,36 +1,36 @@
 {% if page_obj.paginator.num_pages > 1 %}
-    <nav class="mt-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:px-5" aria-label="Pagination">
-        <p class="text-sm text-slate-500">
-            Showing <span class="font-semibold text-slate-700">{{ page_obj.start_index }}–{{ page_obj.end_index }}</span>
-            of <span class="font-semibold text-slate-700">{{ page_obj.paginator.count }}</span>
+    <nav class="st-mt-8 st-flex st-flex-col st-gap-4 st-rounded-2xl st-border st-border-slate-200 st-bg-white st-px-4 st-py-4 st-shadow-sm st-sm-flex-row st-sm-items-center st-sm-justify-between st-sm-px-5" aria-label="Pagination">
+        <p class="st-text-sm st-text-slate-500">
+            Showing <span class="st-font-semibold st-text-slate-700">{{ page_obj.start_index }}–{{ page_obj.end_index }}</span>
+            of <span class="st-font-semibold st-text-slate-700">{{ page_obj.paginator.count }}</span>
         </p>
 
-        <div class="flex items-center justify-between gap-2 sm:justify-end">
+        <div class="st-flex st-items-center st-justify-between st-gap-2 st-sm-justify-end">
             {% if page_obj.has_previous %}
-                <a href="?{{ request.GET.urlencode }}{% if request.GET %}&amp;{% endif %}page={{ page_obj.previous_page_number }}" class="inline-flex min-h-10 items-center gap-2 rounded-xl border border-slate-200 px-3.5 text-sm font-semibold text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" rel="prev">
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                <a href="?{{ request.GET.urlencode }}{% if request.GET %}&amp;{% endif %}page={{ page_obj.previous_page_number }}" class="st-inline-flex st-min-h-10 st-items-center st-gap-2 st-rounded-xl st-border st-border-slate-200 st-px-3-5 st-text-sm st-font-semibold st-text-slate-700 st-transition st-hover-border-indigo-200 st-hover-bg-indigo-50 st-hover-text-indigo-700 st-focus-outline-none st-focus-ring-2 st-focus-ring-indigo-500 st-focus-ring-offset-2" rel="prev">
+                    <svg class="st-h-4 st-w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
                     <span>Previous</span>
                 </a>
             {% else %}
-                <span class="inline-flex min-h-10 cursor-not-allowed items-center gap-2 rounded-xl border border-slate-100 px-3.5 text-sm font-semibold text-slate-300" aria-disabled="true">
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                <span class="st-inline-flex st-min-h-10 st-cursor-not-allowed st-items-center st-gap-2 st-rounded-xl st-border st-border-slate-100 st-px-3-5 st-text-sm st-font-semibold st-text-slate-300" aria-disabled="true">
+                    <svg class="st-h-4 st-w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
                     <span>Previous</span>
                 </span>
             {% endif %}
 
-            <span class="rounded-xl bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-700" aria-current="page">
-                {{ page_obj.number }} <span class="font-medium text-indigo-400">/</span> {{ page_obj.paginator.num_pages }}
+            <span class="st-rounded-xl st-bg-indigo-50 st-px-3-5 st-py-2-5 st-text-sm st-font-semibold st-text-indigo-700" aria-current="page">
+                {{ page_obj.number }} <span class="st-font-medium st-text-indigo-400">/</span> {{ page_obj.paginator.num_pages }}
             </span>
 
             {% if page_obj.has_next %}
-                <a href="?{{ request.GET.urlencode }}{% if request.GET %}&amp;{% endif %}page={{ page_obj.next_page_number }}" class="inline-flex min-h-10 items-center gap-2 rounded-xl border border-slate-200 px-3.5 text-sm font-semibold text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" rel="next">
+                <a href="?{{ request.GET.urlencode }}{% if request.GET %}&amp;{% endif %}page={{ page_obj.next_page_number }}" class="st-inline-flex st-min-h-10 st-items-center st-gap-2 st-rounded-xl st-border st-border-slate-200 st-px-3-5 st-text-sm st-font-semibold st-text-slate-700 st-transition st-hover-border-indigo-200 st-hover-bg-indigo-50 st-hover-text-indigo-700 st-focus-outline-none st-focus-ring-2 st-focus-ring-indigo-500 st-focus-ring-offset-2" rel="next">
                     <span>Next</span>
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                    <svg class="st-h-4 st-w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
             {% else %}
-                <span class="inline-flex min-h-10 cursor-not-allowed items-center gap-2 rounded-xl border border-slate-100 px-3.5 text-sm font-semibold text-slate-300" aria-disabled="true">
+                <span class="st-inline-flex st-min-h-10 st-cursor-not-allowed st-items-center st-gap-2 st-rounded-xl st-border st-border-slate-100 st-px-3-5 st-text-sm st-font-semibold st-text-slate-300" aria-disabled="true">
                     <span>Next</span>
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                    <svg class="st-h-4 st-w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
                 </span>
             {% endif %}
         </div>
