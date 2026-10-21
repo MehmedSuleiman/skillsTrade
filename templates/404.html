@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found | SkillsTrade{% endblock %}
+
+{% block content %}
+<section class="not-found-page" aria-labelledby="not-found-title">
+    <div class="not-found-card">
+        <div class="not-found-art" aria-hidden="true">
+            <span class="not-found-kicker">SKILLSTRADE <span> / </span> ERROR</span>
+            <span class="not-found-number">404</span>
+            <div class="not-found-rule"><span></span></div>
+            <p>PAGE UNAVAILABLE</p>
+        </div>
+
+        <div class="not-found-copy">
+            <span class="not-found-label">Page not found</span>
+            <h1 id="not-found-title">Looks like this page took a wrong turn.</h1>
+            <p class="not-found-description">
+                The link may be outdated, or the page may have moved. Head back home or explore courses to find what you need.
+            </p>
+
+            {% if request_path %}
+                <p class="not-found-path-label">You were looking for</p>
+                <code class="not-found-path">{{ request_path }}</code>
+            {% endif %}
+
+            <div class="not-found-actions">
+                <a class="not-found-button" href="{% url 'common:home' %}">
+                    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="m3 9 7-6 7 6v7a1 1 0 0 1-1 1h-4v-5H8v5H4a1 1 0 0 1-1-1V9Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back to homepage
+                </a>
+                <a class="not-found-link" href="{% url 'schools:course_list' %}">Browse courses <span aria-hidden="true">&rarr;</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
