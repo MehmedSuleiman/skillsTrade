@@ -506,3 +506,40 @@ form input::placeholder, form textarea::placeholder { color: var(--slate-400); }
 @media (min-width: 1280px) {
     [class~="st-xl-grid-cols-3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+/* Custom 404 page */
+.not-found-page { min-height: 540px; display: grid; place-items: center; padding: clamp(3rem, 8vw, 6rem) 1.5rem; background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); }
+.not-found-card { width: min(100%, 960px); display: grid; grid-template-columns: .85fr 1.15fr; overflow: hidden; border: 1px solid var(--slate-200); border-radius: 20px; background: #fff; box-shadow: 0 16px 44px rgb(15 23 42 / .08); }
+.not-found-art { position: relative; isolation: isolate; min-height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; padding: 2rem; background: radial-gradient(ellipse at 50% 45%, #fff 0%, #eef2ff 48%, #e8edff 100%); }
+.not-found-art::before, .not-found-art::after { position: absolute; z-index: -1; content: ""; border: 1px solid rgb(99 102 241 / .13); border-radius: 50%; }
+.not-found-art::before { width: 290px; height: 290px; }
+.not-found-art::after { width: 370px; height: 370px; }
+.not-found-kicker { color: var(--slate-500); font-size: .7rem; font-weight: 700; letter-spacing: .14em; }
+.not-found-kicker span { padding: 0 .25rem; color: var(--indigo-500); }
+.not-found-number { margin-top: .8rem; color: var(--indigo-700); font-size: clamp(6rem, 11vw, 8.5rem); font-weight: 750; letter-spacing: -.095em; line-height: 1; text-shadow: 0 10px 30px rgb(79 70 229 / .12); }
+.not-found-rule { width: 48px; height: 3px; margin-top: 1.5rem; overflow: hidden; border-radius: 3px; background: var(--slate-300); }
+.not-found-rule span { display: block; width: 60%; height: 100%; background: var(--indigo-500); }
+.not-found-art p { margin: .85rem 0 0; color: var(--slate-500); font-size: .65rem; font-weight: 700; letter-spacing: .16em; }
+.not-found-copy { align-self: center; padding: clamp(2.25rem, 5vw, 4.5rem); }
+.not-found-label { display: inline-flex; align-items: center; padding: .4rem .7rem; border-radius: 6px; color: var(--indigo-800); background: var(--indigo-50); font-size: .75rem; font-weight: 650; }
+.not-found-copy h1 { max-width: 16ch; margin: 1.25rem 0 .85rem; color: var(--slate-900); font-size: clamp(2rem, 4vw, 2.65rem); font-weight: 700; letter-spacing: -.045em; line-height: 1.12; }
+.not-found-description { max-width: 42ch; margin: 0; color: var(--slate-600); font-size: .98rem; line-height: 1.75; }
+.not-found-path-label { margin: 1.5rem 0 .4rem; color: var(--slate-500); font-size: .75rem; font-weight: 600; }
+.not-found-path { display: block; max-width: 100%; overflow-wrap: anywhere; color: var(--slate-700); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .82rem; }
+.not-found-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1.25rem; margin-top: 2rem; }
+.not-found-button { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 46px; padding: .7rem 1rem; border: 1px solid var(--indigo-600); border-radius: 8px; color: #fff; background: var(--indigo-600); font-size: .875rem; font-weight: 600; transition: background .16s ease, border-color .16s ease; }
+.not-found-button:hover { border-color: var(--indigo-700); background: var(--indigo-700); }
+.not-found-button:focus-visible, .not-found-link:focus-visible { outline: 3px solid var(--indigo-200); outline-offset: 3px; }
+.not-found-button svg { width: 17px; height: 17px; }
+.not-found-link { color: var(--slate-600); font-size: .875rem; font-weight: 600; text-decoration: none; }
+.not-found-link:hover { color: var(--indigo-700); text-decoration: underline; text-underline-offset: 4px; }
+
+@media (max-width: 700px) {
+    .not-found-page { min-height: 0; padding: 2.5rem 1rem; }
+    .not-found-card { max-width: 480px; grid-template-columns: 1fr; border-radius: 16px; }
+    .not-found-art { min-height: 210px; }
+    .not-found-number { margin-top: .35rem; font-size: 5.75rem; }
+    .not-found-rule { margin-top: .8rem; }
+    .not-found-copy { padding: 2rem 1.5rem 2.25rem; }
+    .not-found-copy h1 { font-size: 2rem; }
+}

@@ -29,6 +29,13 @@ class BaseSchoolForm(forms.ModelForm):
             'skills': 'School Skills',
         }
 
+        error_messages = {
+            'name': {
+                'min_length': 'School names must be at least 4 characters long.',
+                'unique': 'A school with this name is already listed.',
+            },
+        }
+
         widgets = {
             'name': forms.TextInput(attrs={
                 'placeholder': 'e.g. Central Academy of Technology',
@@ -179,6 +186,7 @@ class BaseCourseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['logo'].required = False
+        self.fields['duration_weeks'].error_messages['min_value'] = 'Course duration must be at least 1 week.'
         self.fields['school'].queryset = School.objects.order_by('name')
         self.fields['skills'].queryset = self.fields['skills'].queryset.order_by('name')
 

@@ -17,6 +17,16 @@ class BaseSkillForm(forms.ModelForm):
             'related_skills': 'Related Skills',
         }
 
+        error_messages = {
+            'name': {
+                'min_length': 'Skill names must be at least 5 characters long.',
+                'unique': 'A skill with this name already exists. Try a more specific name.',
+            },
+            'description': {
+                'min_length': 'Please add a little more detail (at least 20 characters).',
+            },
+        }
+
         widgets = {
             'name': forms.TextInput(
                 attrs={
