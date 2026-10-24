@@ -54,13 +54,16 @@ Install the Python packages from `requirements.txt`.
 
 Open <http://127.0.0.1:8000/> in your browser. The admin site is at <http://127.0.0.1:8000/admin/>.
 
-## Tests
+## Optional sample data
 
-Run the Django tests with:
+After applying migrations, you can add sample skills, schools, and courses for local development (The code for db population is AI Generated):
 
 ```bash
-python manage.py test
+python manage.py populate_db
 ```
+
+This command is implemented in `common/management/commands/populate_db.py`. It creates sample records only when they do not already exist, so it can be run more than once. The sample schools, contact details, and course links use placeholder `example.com` information. The command is optional and is never run automatically; the application can also be used with an empty database, and records can be created through the website.
+
 
 ## Project layout
 
