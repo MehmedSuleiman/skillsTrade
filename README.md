@@ -35,7 +35,7 @@ Install the Python packages from `requirements.txt`.
    On macOS or Linux:
 
    ```bash
-   source .venv/bin/activate
+   .venv/bin/activate
    ```
 
 3. Install dependencies:
