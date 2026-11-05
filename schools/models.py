@@ -79,7 +79,7 @@ class School(TimeStampModel):
     def save(self, *args, **kwargs) -> None:
         super().save(*args, **kwargs)
         self.slug = slugify(f"{self.name}-{self.pk}")
-        super().save(*args, **kwargs)
+        super().save(update_fields=["slug"])
 
 class Course(TimeStampModel):
     school = models.ForeignKey(
@@ -127,7 +127,5 @@ class Course(TimeStampModel):
         return self.title
 
     def save(self, *args, **kwargs) -> None:
-        super().save(*args, **kwargs)
         self.slug = slugify(f"{self.title}-{self.pk}")
         super().save(*args, **kwargs)
-

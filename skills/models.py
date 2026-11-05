@@ -64,6 +64,5 @@ class Skill(TimeStampModel):
 
 
     def save(self, *args, **kwargs) -> None:
-        super().save(*args, **kwargs)
         self.slug = slugify(f"{self.name}-{self.pk}")
         super().save(*args, **kwargs)

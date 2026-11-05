@@ -617,8 +617,12 @@ SCHOOL_SKILLS = [{'school_name': 'Sofia Digital Academy', 'skill_name': 'Python 
 class Command(BaseCommand):
     help = "Populate the database with the project's saved skills, schools, and courses."
 
-    @transaction.atomic
     def handle(self, *args, **options):
+        self._populate_saved_data()
+
+    @transaction.atomic
+    def _populate_saved_data(self):
+
         skills = {record["name"]: self._upsert(Skill, "name", record) for record in SKILLS}
         schools = {record["name"]: self._upsert(School, "name", record) for record in SCHOOLS}
         courses = {}
