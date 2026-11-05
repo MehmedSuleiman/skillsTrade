@@ -39,7 +39,8 @@ if DEBUG and 'testserver' not in ALLOWED_HOSTS:
 PROJECT_APPS = [
     'common',
     'skills',
-    'schools'
+    'schools',
+    'accounts'
 ]
 
 INSTALLED_APPS = [

@@ -53,8 +53,8 @@
                             {% if object.get_difficulty_display %}
                                 <span class="st-inline-flex st-items-center st-text-xs st-font-medium st-px-2 st-py-0-5 st-rounded-full st-border
                                     {% if object.difficulty == '1' %} st-bg-emerald-50 st-text-emerald-700 st-border-emerald-200
-                                    {% elif object.difficulty == '2' %} bg-blue-50 text-blue-700 border-blue-200
-                                    {% elif object.difficulty == '3' %} bg-purple-50 text-purple-700 border-purple-200
+                                    {% elif object.difficulty == '2' %} st-bg-slate-50 st-text-slate-700 st-border-slate-200
+                                    {% elif object.difficulty == '3' %} st-bg-indigo-50 st-text-indigo-700 st-border-indigo-100
                                     {% else %} st-bg-slate-100 st-text-slate-700 st-border-slate-200
                                     {% endif %}">
                                     {{ object.get_difficulty_display }}

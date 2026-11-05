@@ -48,6 +48,18 @@ class BaseSkillForm(forms.ModelForm):
             'related_skills': forms.SelectMultiple(),
         }
 
+    def clean_name(self):
+        name = self.cleaned_data['name'].strip()
+        if len(name) < 5:
+            raise forms.ValidationError('Skill names must contain at least 5 non-space characters.')
+        return name
+
+    def clean_description(self):
+        description = (self.cleaned_data.get('description') or '').strip()
+        if description and len(description) < 20:
+            raise forms.ValidationError('Please add a little more detail (at least 20 characters).')
+        return description
+
 
 
 class CreateSkillForm(BaseSkillForm):
