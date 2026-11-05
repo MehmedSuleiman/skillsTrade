@@ -1,5 +1,7 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
+from common.models import SchoolSkill
 from schools.models import School, Course
 
 
@@ -93,6 +95,19 @@ class BaseSchoolForm(forms.ModelForm):
                 }
             ),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        skills = cleaned_data.get('skills')
+        if skills:
+            for skill in skills:
+                through = SchoolSkill(school=self.instance, skill=skill)
+                try:
+                    through.clean()
+                except ValidationError as error:
+                    self.add_error('skills', error)
+                    break
+        return cleaned_data
 
 class SchoolCreatingForm(BaseSchoolForm):
     class Meta(BaseSchoolForm.Meta):
@@ -189,6 +204,13 @@ class BaseCourseForm(forms.ModelForm):
         self.fields['duration_weeks'].error_messages['min_value'] = 'Course duration must be at least 1 week.'
         self.fields['school'].queryset = School.objects.order_by('name')
         self.fields['skills'].queryset = self.fields['skills'].queryset.order_by('name')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        school = cleaned_data.get('school')
+        if school and not school.is_verified:
+            self.add_error('school', 'Courses can only be added to a verified school.')
+        return cleaned_data
 
 
 class CourseCreatingForm(BaseCourseForm):

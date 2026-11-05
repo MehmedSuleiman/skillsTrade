@@ -1,0 +1,8 @@
+<div class="{{ wrapper_class|default:'' }}">
+    <label for="{{ field.id_for_label }}" class="st-mb-1-5 st-block st-text-sm st-font-semibold st-text-slate-800">
+        {{ field.label }}{% if field.field.required %}<span class="st-ml-1 st-text-rose-500" aria-label="required">*</span>{% endif %}
+    </label>
+    {{ field }}
+    {% if field.help_text %}<p class="st-mt-1-5 st-text-xs st-leading-5 st-text-slate-500">{{ field.help_text }}</p>{% endif %}
+    {% if field.errors %}<p class="st-mt-1-5 st-text-xs st-font-medium st-text-rose-600" role="alert">{{ field.errors|striptags }}</p>{% endif %}
+</div>

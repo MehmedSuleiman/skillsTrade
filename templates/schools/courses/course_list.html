@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load skill_extras %}
 
 {% block title %}Courses | SkillsTrade{% endblock %}
 
@@ -44,7 +45,7 @@
                                 <svg class="st-h-8 st-w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
                             </div>
                         {% endif %}
-                        <span class="st-absolute st-left-4 st-top-4 st-rounded-full st-border st-border-white-slash-70 st-bg-white-slash-90 st-px-3 st-py-1 st-text-xs st-font-semibold st-text-indigo-700 st-shadow-sm st-backdrop-blur">{{ course.duration_weeks }} week{{ course.duration_weeks|pluralize }}</span>
+                        <span class="st-absolute st-left-4 st-top-4 st-rounded-full st-border st-border-white-slash-70 st-bg-white-slash-90 st-px-3 st-py-1 st-text-xs st-font-semibold st-text-indigo-700 st-shadow-sm st-backdrop-blur">{{ course.duration_weeks|duration_label }}</span>
                     </div>
 
                     <div class="st-flex st-flex-1 st-flex-col st-p-5 st-sm-p-6">
