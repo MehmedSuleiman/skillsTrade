@@ -1,7 +1,6 @@
 from django.contrib import admin
-from unfold.admin import ModelAdmin, TabularInline
+from unfold.admin import ModelAdmin
 
-from common.models import SchoolSkill
 from .models import Course, School
 
 @admin.register(School)
