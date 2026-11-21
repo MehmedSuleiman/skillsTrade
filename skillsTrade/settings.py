@@ -40,7 +40,8 @@ PROJECT_APPS = [
     'common',
     'skills',
     'schools',
-    'accounts'
+    'accounts',
+    'community_lessons'
 ]
 
 INSTALLED_APPS = [
