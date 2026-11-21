@@ -1,4 +1,5 @@
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.contrib.auth import get_user_model
+from django.core.validators import MinLengthValidator
 from django.db import models
 from django.utils.text import slugify
 
@@ -6,8 +7,17 @@ from common.models import TimeStampModel, SchoolSkill
 from skills.models import Skill
 
 
+UserModel = get_user_model()
+
 class School(TimeStampModel):
+    user = models.OneToOneField(
+        to = UserModel,
+        on_delete=models.CASCADE,
+        related_name='school',
+    )
     name = models.CharField(
+        blank = True,
+        null = True,
         max_length=100,
         unique=True,
         validators=[
@@ -16,6 +26,8 @@ class School(TimeStampModel):
     )
 
     description = models.TextField(
+        blank = True,
+        null = True,
         validators=[MinLengthValidator(20)],
     )
 
@@ -30,21 +42,32 @@ class School(TimeStampModel):
         null=True,
     )
 
-    email = models.EmailField()
+    email = models.EmailField(
+        blank = True,
+        null = True,
+    )
 
     phone = models.CharField(
-        max_length=30
+        max_length=30,
+        blank=True,
+        null=True,
     )
 
     city = models.CharField(
-        max_length=100
+        max_length=100,
+        blank=True,
+        null=True,
     )
     country = models.CharField(
-        max_length=100
+        max_length=100,
+        blank=True,
+        null=True,
     )
 
     address = models.CharField(
         max_length=255,
+        blank=True,
+        null=True,
     )
 
     is_verified = models.BooleanField(default=True)  #TODO : when learn how to manage roles, default must be false
@@ -77,9 +100,8 @@ class School(TimeStampModel):
 
 
     def save(self, *args, **kwargs) -> None:
+        self.slug = slugify(f"{self.user.username}-{self.pk}")
         super().save(*args, **kwargs)
-        self.slug = slugify(f"{self.name}-{self.pk}")
-        super().save(update_fields=["slug"])
 
 class Course(TimeStampModel):
     school = models.ForeignKey(

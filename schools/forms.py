@@ -128,11 +128,22 @@ class SchoolCreatingForm(BaseSchoolForm):
 
 
 class SchoolUpdateForm(BaseSchoolForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].required = True
+        self.fields['description'].required = True
+        self.fields['email'].required = True
+        self.fields['website'].required = True
+        self.fields['phone'].required = True
+        self.fields['city'].required = True
+        self.fields['country'].required = True
+        self.fields['address'].required = True
+
     class Meta(SchoolCreatingForm.Meta):
         widgets = {
             **BaseSchoolForm.Meta.widgets,
-            'name': forms.TextInput(attrs={
-                'placeholder': 'e.g. Central Academy of Technology',
+            'user': forms.TextInput(attrs={
+                'placeholder': 'The user behind this school.',
                 'autocomplete': 'organization',
                 'readonly': 'readonly',
             }),
@@ -140,8 +151,11 @@ class SchoolUpdateForm(BaseSchoolForm):
 
         help_texts = {
             **SchoolCreatingForm.Meta.help_texts,
-            'name': 'School names cannot be changed after creation.',
+            'user': 'School user cannot be changed.',
         }
+
+
+
 
 
 class BaseCourseForm(forms.ModelForm):
