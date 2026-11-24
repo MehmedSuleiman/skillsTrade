@@ -117,8 +117,16 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'accounts.password_validation.PracticalPasswordValidator',
+    }
 ]
 
+
+AUTHENTICATION_BACKENDS = [
+    "accounts.backends.EmailBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
@@ -147,6 +155,20 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailjet.com'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+COMPANY_EMAIL = os.getenv('COMPANY_EMAIL')
+
+
+
+LOGIN_REDIRECT_URL = "common:home"
+LOGOUT_REDIRECT_URL = "common:home"
+LOGIN_URL = 'accounts:login'
+LOGOUT_URL = 'accounts:logout'
 
 MAILERS = {
     'default': {
