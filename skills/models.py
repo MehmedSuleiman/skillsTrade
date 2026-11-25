@@ -1,11 +1,16 @@
+from django.conf import settings
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.utils.text import slugify
 
 from common.models import SkillCategory, SkillDifficulty, TimeStampModel
 
-
 class Skill(TimeStampModel):
+    user = models.ForeignKey(
+        to = settings.AUTH_USER_MODEL,
+        on_delete = models.CASCADE,
+        related_name = 'skills',
+    )
     category = models.CharField(
         max_length = 100,
         choices = SkillCategory.choices,

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q, F
 from django.http import HttpRequest, HttpResponse
@@ -46,22 +47,29 @@ class SchoolDetailView(DetailView):
         School.objects.filter(pk=obj.pk).update(views=F('views') + 1)
         return obj
 
-class SchoolCreate(CreateView):
+class SchoolCreate(CreateView, LoginRequiredMixin):
     model = School
     form_class = SchoolCreatingForm
     template_name = 'schools/school_create.html'
     success_url = reverse_lazy('schools:schools_home')
 
-class SchoolUpdate(UpdateView):
+class SchoolUpdate(LoginRequiredMixin, UpdateView):
     model = School
     form_class = SchoolUpdateForm
     template_name = 'schools/school_edit.html'
     success_url = reverse_lazy('schools:schools_home')
 
-class SchoolDelete(DeleteView):
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
+
+class SchoolDelete(LoginRequiredMixin, DeleteView):
     model = School
     template_name = 'schools/confirm_delete.html'
     success_url = reverse_lazy('schools:schools_home')
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
 class CourseListView(ListView, FormView):
     model = Course
@@ -130,21 +138,24 @@ class CourseCreate(CreateView):
         return reverse('schools:course_detail', kwargs={'slug': self.object.slug})
 
 
-class CourseUpdate(UpdateView):
+class CourseUpdate(LoginRequiredMixin, UpdateView):
     model = Course
     form_class = CourseUpdateForm
     template_name = 'schools/courses/course_edit.html'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(school__user=self.request.user).select_related('school')
 
     def get_success_url(self):
         return reverse('schools:course_detail', kwargs={'slug': self.object.slug})
 
 
-class CourseDelete(DeleteView):
+class CourseDelete(LoginRequiredMixin, DeleteView):
     model = Course
     template_name = 'schools/courses/course_confirm_delete.html'
 
     def get_queryset(self):
-        return super().get_queryset().select_related('school')
+        return super().get_queryset().filter(school__user=self.request.user).select_related('school')
 
     def get_success_url(self):
         return reverse('schools:detail', kwargs={'slug': self.object.school.slug})

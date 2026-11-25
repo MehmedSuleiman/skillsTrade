@@ -1,0 +1,86 @@
+<div class="profile-editor st-mx-auto st-max-w-3xl st-px-4 st-py-8 st-sm-px-6 st-sm-py-12">
+    <nav aria-label="Breadcrumb" class="st-mb-6 st-flex st-items-center st-gap-2 st-text-sm st-text-slate-500">
+        <a href="{% url 'common:home' %}" class="st-transition-colors st-hover-text-indigo-600">Home</a>
+        <span aria-hidden="true">/</span>
+        <span class="st-font-medium st-text-slate-800" aria-current="page">Profile</span>
+    </nav>
+
+    <header class="profile-editor-heading st-mb-7">
+        <div class="profile-editor-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path></svg>
+        </div>
+        <p class="st-mb-2 st-text-xs st-font-bold st-uppercase st-tracking-0-18em st-text-indigo-600">Your SkillsTrade identity</p>
+        <h1 class="st-text-3xl st-font-extrabold st-tracking-tight st-text-slate-900 st-sm-text-4xl">{{ form_title }}</h1>
+        <p class="st-mt-2 st-max-w-2xl st-text-sm st-leading-6 st-text-slate-600">{{ form_description }}</p>
+    </header>
+
+    <div class="profile-editor-card st-overflow-hidden st-rounded-3xl st-border st-border-slate-200 st-bg-white st-shadow-sm">
+        <div class="profile-editor-accent"></div>
+        <form method="post" enctype="multipart/form-data" class="profile-editor-form st-p-6 st-sm-p-8">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="profile-form-errors" role="alert">
+                    <strong>Please check the form details.</strong>
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <section class="profile-form-section" aria-labelledby="profile-personal-heading">
+                <div class="profile-section-heading">
+                    <span class="profile-section-number">01</span>
+                    <div>
+                        <h2 id="profile-personal-heading">About you</h2>
+                        <p>A few details help people put a face and story to your profile.</p>
+                    </div>
+                </div>
+
+                {% if profile.profile_pic %}
+                    <div class="profile-photo-current">
+                        <img src="{{ profile.profile_pic.url }}" alt="Current profile photo">
+                        <div><span>Current profile photo</span><small>Choose a new image below to replace it.</small></div>
+                    </div>
+                {% endif %}
+
+                <div class="profile-fields-grid">
+                    {% for field in form.visible_fields %}
+                        {% if field.name == 'first_name' or field.name == 'last_name' or field.name == 'age' %}
+                            {% include 'common/form_field.html' with field=field %}
+                        {% endif %}
+                    {% endfor %}
+                    {% for field in form.visible_fields %}
+                        {% if field.name == 'bio' or field.name == 'profile_pic' %}
+                            {% include 'common/form_field.html' with field=field wrapper_class='profile-field-wide' %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="profile-form-section profile-skills-section" aria-labelledby="profile-skills-heading">
+                <div class="profile-section-heading">
+                    <span class="profile-section-number">02</span>
+                    <div>
+                        <h2 id="profile-skills-heading">Make it a skill swap</h2>
+                        <p>Choose skills you can share and the ones you’d like to pick up.</p>
+                    </div>
+                </div>
+                <div class="profile-fields-grid profile-skills-grid">
+                    {% for field in form.visible_fields %}
+                        {% if field.name == 'skills_to_teach' or field.name == 'skills_to_learn' %}
+                            {% include 'common/form_field.html' with field=field %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
+
+            <div class="profile-form-actions">
+                <a href="{% url 'common:home' %}" class="profile-cancel-button">Cancel</a>
+                <button type="submit" class="profile-submit-button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg>
+                    {{ submit_label }}
+                </button>
+            </div>
+        </form>
+    </div>
+    <p class="profile-editor-footnote">Your profile helps other members find a great match for their next skill swap.</p>
+</div>

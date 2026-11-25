@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Sign in | SkillsTrade{% endblock %}
+
+{% block content %}
+<section class="account-page st-max-w-xl st-mx-auto st-px-4 st-py-12">
+    <div class="account-card st-bg-white st-border st-border-slate-200 st-rounded-2xl st-p-8 st-shadow-sm">
+        <h1 class="st-text-3xl st-font-bold st-text-slate-900">Welcome back</h1>
+        <p class="st-mt-2 st-text-slate-600">Sign in to continue to SkillsTrade.</p>
+        {% if messages %}
+            {% for message in messages %}<p class="account-success-message" role="status">{{ message }}</p>{% endfor %}
+        {% endif %}
+        {% if form.errors %}<p class="st-mt-4 st-text-sm st-text-red-700" role="alert">Your email or password was not accepted. Please try again.</p>{% endif %}
+        {% if next %}<p class="st-mt-4 st-text-sm st-text-slate-600">Sign in to access the page you requested.</p>{% endif %}
+        <form method="post" class="st-mt-6 st-space-y-5">
+            {% csrf_token %}
+            <div>
+                <label for="id_username" class="st-block st-text-sm st-font-medium st-text-slate-700">Email or username</label>
+                <input type="text" name="username" id="id_username" autocomplete="username" required autofocus value="{{ form.username.value|default_if_none:'' }}" class="st-mt-1 st-w-full st-rounded-lg st-border st-border-slate-300 st-px-3 st-py-2">
+                {{ form.username.errors }}
+            </div>
+            <div>
+                <label for="id_password" class="st-block st-text-sm st-font-medium st-text-slate-700">Password</label>
+                <input type="password" name="password" id="id_password" autocomplete="current-password" required class="st-mt-1 st-w-full st-rounded-lg st-border st-border-slate-300 st-px-3 st-py-2">
+                {{ form.password.errors }}
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="st-w-full st-rounded-lg st-bg-indigo-600 st-px-4 st-py-2-5 st-font-semibold st-text-white st-hover-bg-indigo-700">Sign in</button>
+        </form>
+        <p class="st-mt-5 st-text-sm st-text-slate-600"><a class="st-text-indigo-600 st-hover-text-indigo-700" href="{% url 'accounts:password_reset' %}">Forgot your password?</a></p>
+        <p class="account-switch-link">New to SkillsTrade? <a href="{% url 'accounts:register' %}">Create an account</a></p>
+    </div>
+</section>
+{% endblock %}

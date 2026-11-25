@@ -6,7 +6,6 @@ from django.core.validators import MinLengthValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
-from skills.models import Skill
 
 from common.models import TimeStampModel
 
@@ -115,12 +114,12 @@ class Profile(TimeStampModel):
     )
 
     skills_to_teach = models.ManyToManyField(
-        to=Skill,
+        to='skills.Skill',
         blank=True,
         related_name="skills_to_teach",
     )
     skills_to_learn = models.ManyToManyField(
-        to=Skill,
+        to='skills.Skill',
         blank=True,
         related_name="skills_to_learn",
     )

@@ -25,13 +25,20 @@
                 <a href="{% url 'schools:course_list' %}" class="st-text-sm st-font-medium st-text-slate-600 st-hover-text-indigo-600 st-hover-bg-slate-50 st-px-3 st-py-2 st-rounded-lg st-transition-colors">Courses</a>
                 <a href="{% url 'schools:schools_home' %}" class="st-text-sm st-font-medium st-text-slate-600 st-hover-text-indigo-600 st-hover-bg-slate-50 st-px-3 st-py-2 st-rounded-lg st-transition-colors">Official Schools</a>
                 <a href="{% url 'skills:create-skill' %}" class="st-inline-flex st-items-center st-text-sm st-font-medium st-text-white st-bg-indigo-600 st-hover-bg-indigo-700 st-px-4 st-py-2 st-rounded-lg st-shadow-sm st-transition-colors">Post Skill</a>
-{#                <a href="/" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-medium st-text-slate-700 st-hover-text-indigo-600 st-hover-bg-slate-50 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">#}
-{#                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="st-w-5 st-h-5 st-text-slate-500 ai ai-Person">#}
-{#                        <circle cx="12" cy="7" r="5"/>#}
-{#                        <path d="M17 14h.352a3 3 0 0 1 2.976 2.628l.391 3.124A2 2 0 0 1 18.734 22H5.266a2 2 0 0 1-1.985-2.248l.39-3.124A3 3 0 0 1 6.649 14H7"/>#}
-{#                    </svg>#}
-{#                    Account#}
-{#                </a>#}
+                {% if user.is_authenticated %}
+                    {% if user.is_school and user.school %}
+                        <a href="{% url 'schools:update_school' slug=user.school.slug %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My school</a>
+                    {% elif user.profile %}
+                        <a href="{% url 'accounts:profile-update' pk=user.profile.pk %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My profile</a>
+                    {% endif %}
+                    <form method="post" action="{% url 'accounts:logout' %}" class="nav-logout-form">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-logout-button">Sign out</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="nav-auth-link">Sign in</a>
+                    <a href="{% url 'accounts:register' %}" class="nav-register-link">Create account</a>
+                {% endif %}
             </div>
         </nav>
     </header>

@@ -145,6 +145,7 @@
                         </dl>
                     </section>
 
+                    {% if user.is_authenticated and user.pk == skill.user_id %}
                     <div class="st-grid st-grid-cols-2 st-gap-3">
                         <a href="{% url 'skills:update-skill' skill.slug %}"
                            class="st-inline-flex st-items-center st-justify-center st-gap-2 st-rounded-xl st-border st-border-indigo-200 st-bg-indigo-50 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-indigo-700 st-hover-bg-indigo-100 st-hover-border-indigo-300 st-transition-colors">
@@ -163,6 +164,7 @@
                             Delete
                         </a>
                     </div>
+                    {% endif %}
 
                     <a href="{% url 'common:home' %}"
                        class="st-inline-flex st-items-center st-gap-2 st-px-1 st-text-sm st-font-medium st-text-slate-500 st-hover-text-indigo-600 st-transition-colors">
