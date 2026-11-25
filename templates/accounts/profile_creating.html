@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block title %}Create your profile | SkillsTrade{% endblock %}
+
+{% block content %}
+    {% include 'accounts/profile_form.html' with form_title="Build your profile" form_description="Introduce yourself to the SkillsTrade community. Share what you can teach and what you’re excited to learn." submit_label="Create profile" is_create=True %}
+{% endblock %}

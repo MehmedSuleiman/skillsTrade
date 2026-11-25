@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q, F
 from django.http import HttpRequest, HttpResponse
@@ -49,16 +50,23 @@ class SkillCreate(CreateView):
         return super().form_valid(form)
 
 
-class SkillUpdate(UpdateView):
+class SkillUpdate(LoginRequiredMixin, UpdateView):
     model = Skill
     form_class = EditSkillForm
     template_name = 'skills/update_skill.html'
     success_url = reverse_lazy('common:home')
 
-class SkillDelete(DeleteView):
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+
+
+class SkillDelete(LoginRequiredMixin, DeleteView):
     model = Skill
     template_name = 'skills/delete_skill.html'
     success_url = reverse_lazy('common:home')
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
 class SkillDetail(DetailView):
     model = Skill

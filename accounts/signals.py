@@ -15,7 +15,7 @@ def create_pofile(sender, instance, created, **kwargs) -> HttpResponse:
             return redirect('schools:update_school')
         else:
             Profile.objects.create(user=instance)
-            return redirect('schools:update_school') #TODO: to be fixed when the url for profile creation is made.
+            return redirect('accounts:profile-create')
 
     else:
         return HttpResponse(status=404)

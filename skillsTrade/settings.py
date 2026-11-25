@@ -169,9 +169,3 @@ LOGIN_REDIRECT_URL = "common:home"
 LOGOUT_REDIRECT_URL = "common:home"
 LOGIN_URL = 'accounts:login'
 LOGOUT_URL = 'accounts:logout'
-
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}

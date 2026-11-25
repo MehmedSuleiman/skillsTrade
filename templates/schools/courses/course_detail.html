@@ -44,8 +44,10 @@
                         <div class="st-flex st-justify-between st-gap-4 st-py-3"><dt class="st-text-sm st-text-slate-500">Views</dt><dd class="st-text-sm st-font-semibold st-text-slate-800">{{ course.views }}</dd></div>
                     </dl>
                     <a href="{{ course.url }}" target="_blank" rel="noopener noreferrer" class="st-mt-5 st-inline-flex st-w-full st-items-center st-justify-center st-gap-2 st-rounded-xl st-bg-indigo-600 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-white st-hover-bg-indigo-700">Visit course <span aria-hidden="true">↗</span></a>
-                    <a href="{% url 'schools:course_update' course.slug %}" class="st-mt-3 st-inline-flex st-w-full st-items-center st-justify-center st-rounded-xl st-border st-border-indigo-200 st-bg-indigo-50 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-indigo-700 st-hover-bg-indigo-100">Edit course</a>
-                    <a href="{% url 'schools:course_delete' course.slug %}" class="st-mt-3 st-inline-flex st-w-full st-items-center st-justify-center st-rounded-xl st-border st-border-rose-200 st-bg-rose-50 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-rose-700 st-hover-bg-rose-100">Delete course</a>
+                    {% if user.is_authenticated and user.pk == course.school.user_id %}
+                        <a href="{% url 'schools:course_update' course.slug %}" class="st-mt-3 st-inline-flex st-w-full st-items-center st-justify-center st-rounded-xl st-border st-border-indigo-200 st-bg-indigo-50 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-indigo-700 st-hover-bg-indigo-100">Edit course</a>
+                        <a href="{% url 'schools:course_delete' course.slug %}" class="st-mt-3 st-inline-flex st-w-full st-items-center st-justify-center st-rounded-xl st-border st-border-rose-200 st-bg-rose-50 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-rose-700 st-hover-bg-rose-100">Delete course</a>
+                    {% endif %}
                 </section>
                 <a href="{% url 'schools:course_list' %}" class="st-inline-flex st-items-center st-gap-2 st-px-1 st-text-sm st-font-medium st-text-slate-500 st-hover-text-indigo-600">← Back to all courses</a>
             </aside>
