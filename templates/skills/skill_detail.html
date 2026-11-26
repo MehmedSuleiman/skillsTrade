@@ -109,6 +109,12 @@
                         <h2 class="st-text-xl st-font-bold">Ready to learn together?</h2>
                         <p class="st-mt-2 st-text-sm st-leading-6 st-text-slate-300">Explore more skills in this category or share
                             your own expertise with the community.</p>
+                        {% if skill.user.profile %}
+                            <a href="{% url 'accounts:profile-detail' slug=skill.user.profile.slug %}"
+                               class="st-mt-4 st-inline-flex st-w-full st-items-center st-justify-center st-rounded-xl st-border st-border-white-slash-20 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-white st-hover-bg-white-slash-10 st-transition-colors">
+                                View {{ skill.user.username }}’s profile
+                            </a>
+                        {% endif %}
                         <a href="{% url 'skills:skills_type' skill.category %}"
                            class="st-mt-6 st-inline-flex st-w-full st-items-center st-justify-center st-gap-2 st-rounded-xl st-bg-white st-px-4 st-py-3 st-text-sm st-font-semibold st-text-slate-900 st-hover-bg-indigo-50 st-transition-colors">
                             Browse this category

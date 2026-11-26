@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Welcome to SkillsTrade</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f6fb;font-family:Arial,Helvetica,sans-serif;color:#1e293b;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="padding:36px 16px;background:#f4f6fb;">
+        <tr><td align="center">
+            <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:600px;overflow:hidden;border:1px solid #e2e8f0;border-radius:18px;background:#fff;box-shadow:0 18px 48px rgba(15,23,42,.08);">
+                <tr><td style="height:5px;background:linear-gradient(90deg,#4f46e5,#818cf8,#38bdf8);font-size:0;">&nbsp;</td></tr>
+                <tr><td style="padding:30px 38px 12px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr>
+                        <td width="42" height="42" align="center" valign="middle" style="width:42px;height:42px;border-radius:12px;background:#eef2ff;color:#4f46e5;font-size:20px;font-weight:bold;">S</td>
+                        <td style="padding-left:11px;color:#0f172a;font-size:19px;font-weight:bold;">Skills<span style="color:#4f46e5;">Trade</span></td>
+                    </tr></table>
+                </td></tr>
+                <tr><td style="padding:25px 38px 36px;">
+                    <p style="margin:0 0 10px;color:#4f46e5;font-size:12px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;">Your next skill starts here</p>
+                    <h1 style="margin:0 0 16px;color:#0f172a;font-size:28px;line-height:1.25;letter-spacing:-.5px;">Welcome, {{ user.username }}!</h1>
+                    <p style="margin:0;color:#475569;font-size:16px;line-height:1.7;">Your SkillsTrade account is ready. This is a place to share what you know, meet people with different experience, and learn something new through a skill swap.</p>
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:24px;border:1px solid #e0e7ff;border-radius:12px;background:#f5f7ff;">
+                        <tr><td style="padding:17px 18px;color:#475569;font-size:14px;line-height:1.65;"><strong style="color:#1e293b;">Your sign-in email</strong><br>{{ user.email }}<br><span style="color:#64748b;">Use the username and password you chose during registration to sign in.</span></td></tr>
+                    </table>
+                    <p style="margin:24px 0 0;color:#475569;font-size:15px;line-height:1.7;">Start by filling out your profile, then list a skill you can teach or browse skills you’d like to learn.</p>
+                    <p style="margin:18px 0 0;color:#334155;font-size:14px;font-weight:bold;">Happy swapping,<br>The SkillsTrade team</p>
+                </td></tr>
+            </table>
+            <p style="margin:20px 0 0;color:#94a3b8;font-size:12px;line-height:1.6;text-align:center;">This message was sent to {{ user.email }} because a SkillsTrade account was created with this address.</p>
+        </td></tr>
+    </table>
+</body>
+</html>

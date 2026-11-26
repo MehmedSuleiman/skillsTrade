@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q, F
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, ListView, FormView
 
@@ -47,17 +47,32 @@ class SchoolDetailView(DetailView):
         School.objects.filter(pk=obj.pk).update(views=F('views') + 1)
         return obj
 
-class SchoolCreate(CreateView, LoginRequiredMixin):
+class SchoolCreate(LoginRequiredMixin, CreateView):
     model = School
     form_class = SchoolCreatingForm
     template_name = 'schools/school_create.html'
-    success_url = reverse_lazy('schools:schools_home')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            school = School.objects.filter(user=request.user).first()
+            if school:
+                return redirect('schools:update_school', slug=school.slug)
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('schools:detail', kwargs={'slug': self.object.slug})
 
 class SchoolUpdate(LoginRequiredMixin, UpdateView):
     model = School
     form_class = SchoolUpdateForm
     template_name = 'schools/school_edit.html'
-    success_url = reverse_lazy('schools:schools_home')
+
+    def get_success_url(self):
+        return reverse('schools:detail', kwargs={'slug': self.object.slug})
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
@@ -107,13 +122,13 @@ class CourseDetailView(DetailView):
         Course.objects.filter(pk=obj.pk).update(views=F('views') + 1)
         return obj
 
-class CourseCreate(CreateView):
+class CourseCreate(LoginRequiredMixin, CreateView):
     model = Course
     form_class = CourseCreatingForm
     template_name = 'schools/courses/course_create.html'
 
     def get_school(self):
-        return get_object_or_404(School, slug=self.kwargs['school_slug'])
+        return get_object_or_404(School, slug=self.kwargs['school_slug'], user=self.request.user)
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -145,6 +160,18 @@ class CourseUpdate(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return super().get_queryset().filter(school__user=self.request.user).select_related('school')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['school'].queryset = School.objects.filter(user=self.request.user)
+        form.fields['school'].disabled = True
+        return form
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['school'].queryset = School.objects.filter(user=self.request.user)
+        form.fields['school'].disabled = True
+        return form
 
     def get_success_url(self):
         return reverse('schools:course_detail', kwargs={'slug': self.object.slug})

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if profile.first_name or profile.last_name %}{{ profile.first_name }} {{ profile.last_name }}{% else %}{{ profile.user.username }}{% endif %} | SkillsTrade{% endblock %}
+
+{% block content %}
+<div class="member-profile-page">
+    <div class="member-profile-shell">
+        <nav class="member-profile-breadcrumb" aria-label="Breadcrumb">
+            <a href="{% url 'common:home' %}">Home</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Member profile</span>
+        </nav>
+
+        <article class="member-profile-card">
+            <header class="member-profile-header">
+                <div class="member-profile-identity">
+                    {% if profile.profile_pic %}
+                        <img class="member-profile-avatar" src="{{ profile.profile_pic.url }}" alt="{{ profile.user.username }}’s profile photo">
+                    {% else %}
+                        <div class="member-profile-avatar member-profile-avatar-fallback" aria-hidden="true">{% if profile.first_name %}{{ profile.first_name|first|upper }}{% else %}{{ profile.user.username|first|upper }}{% endif %}</div>
+                    {% endif %}
+                    <div class="member-profile-name">
+                        <p class="member-profile-kicker">SkillsTrade member</p>
+                        <h1>{% if profile.first_name or profile.last_name %}{{ profile.first_name }} {{ profile.last_name }}{% else %}{{ profile.user.username }}{% endif %}</h1>
+                        <p class="member-profile-handle">@{{ profile.user.username }} <span aria-hidden="true">·</span> Joined {{ profile.created_at|date:"F Y" }}</p>
+                    </div>
+                </div>
+                {% if user.is_authenticated and user.pk == profile.user_id %}
+                    <a class="member-profile-edit" href="{% url 'accounts:profile-update' pk=profile.pk %}">
+                        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m13.9 3.1 3 3M3 17l3.6-.7L16.2 6.7a2.1 2.1 0 0 0-3-3L3.7 13.2 3 17Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Edit profile
+                    </a>
+                {% endif %}
+            </header>
+
+            <div class="member-profile-content">
+                <section class="member-profile-about" aria-labelledby="member-about-title">
+                    <h2 id="member-about-title">About</h2>
+                    {% if profile.bio %}
+                        <p>{{ profile.bio|linebreaksbr }}</p>
+                    {% else %}
+                        <p class="member-profile-muted">This member hasn’t added an introduction yet.</p>
+                    {% endif %}
+                    {% if profile.age %}<p class="member-profile-age"><span>Age</span>{{ profile.age }}</p>{% endif %}
+                </section>
+
+                <div class="member-profile-skills">
+                    <section class="member-profile-skill-section" aria-labelledby="member-teach-title">
+                        <div class="member-profile-section-heading">
+                            <span class="member-profile-section-mark member-profile-teach-mark" aria-hidden="true">+</span>
+                            <div><h2 id="member-teach-title">Skills I can teach</h2><p>Knowledge this member can share</p></div>
+                        </div>
+                        {% with skills=profile.skills_to_teach.all %}
+                            {% if skills %}
+                                <ul class="member-profile-tags">{% for skill in skills %}<li>{{ skill.name }}</li>{% endfor %}</ul>
+                            {% else %}
+                                <p class="member-profile-muted">No teaching skills added yet.</p>
+                            {% endif %}
+                        {% endwith %}
+                    </section>
+
+                    <section class="member-profile-skill-section" aria-labelledby="member-learn-title">
+                        <div class="member-profile-section-heading">
+                            <span class="member-profile-section-mark member-profile-learn-mark" aria-hidden="true">↗</span>
+                            <div><h2 id="member-learn-title">Skills I want to learn</h2><p>Topics this member is exploring</p></div>
+                        </div>
+                        {% with skills=profile.skills_to_learn.all %}
+                            {% if skills %}
+                                <ul class="member-profile-tags member-profile-learning-tags">{% for skill in skills %}<li>{{ skill.name }}</li>{% endfor %}</ul>
+                            {% else %}
+                                <p class="member-profile-muted">No learning goals added yet.</p>
+                            {% endif %}
+                        {% endwith %}
+                    </section>
+                </div>
+
+                {% if user.is_authenticated and user.pk == profile.user_id %}
+                    <section class="account-settings-panel profile-account-settings" aria-labelledby="profile-account-heading">
+                        <div class="account-settings-copy">
+                            <span class="account-settings-mark" aria-hidden="true">
+                                <svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5 16 5v4.2c0 3.6-2.5 6.8-6 8.3-3.5-1.5-6-4.7-6-8.3V5l6-2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M7.5 9.8 9.2 11.5l3.4-3.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <div><h2 id="profile-account-heading">Account settings</h2><p>Manage your password and sign-in</p></div>
+                        </div>
+                        <div class="account-settings-actions">
+                            <a href="{% url 'accounts:password_change' %}" class="account-settings-button">
+                                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 8V5.8a3.5 3.5 0 0 1 7 0V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                Change password
+                            </a>
+                            <form method="post" action="{% url 'accounts:logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="account-settings-button account-settings-signout">
+                                    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M8 3H4.8A1.8 1.8 0 0 0 3 4.8v10.4A1.8 1.8 0 0 0 4.8 17H8m4-3 4-4-4-4m4 4H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    Sign out
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+                {% endif %}
+            </div>
+        </article>
+    </div>
+</div>
+{% endblock %}

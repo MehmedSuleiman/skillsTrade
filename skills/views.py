@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q, F
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from common.forms import SearchForm
@@ -39,15 +39,17 @@ def skills_type_view(request : HttpRequest, skills_type) -> HttpResponse:
     }
     return render(request, 'skills/skill_type.html', context)
 
-class SkillCreate(CreateView):
+class SkillCreate(LoginRequiredMixin, CreateView):
     model = Skill
     form_class = CreateSkillForm
     template_name = 'skills/create_skill.html'
-    success_url = reverse_lazy('common:home')
-
     def form_valid(self, form):
         messages.success(self.request, "Skill successfully created")
+        form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('skills:detail', kwargs={'slug': self.object.slug})
 
 
 class SkillUpdate(LoginRequiredMixin, UpdateView):

@@ -3,11 +3,15 @@
 {% block title %}Signed out | SkillsTrade{% endblock %}
 
 {% block content %}
-<section class="account-page st-max-w-xl st-mx-auto st-px-4 st-py-16">
-    <div class="account-card account-card-centered st-bg-white st-border st-border-slate-200 st-rounded-2xl st-p-8 st-text-center st-shadow-sm">
-        <h1 class="st-text-3xl st-font-bold st-text-slate-900">You’re signed out</h1>
-        <p class="st-mt-3 st-text-slate-600">Thanks for spending time with SkillsTrade.</p>
-        <a href="{% url 'accounts:login' %}" class="st-mt-6 st-inline-flex st-rounded-lg st-bg-indigo-600 st-px-5 st-py-2-5 st-font-semibold st-text-white st-hover-bg-indigo-700">Sign in again</a>
+<section class="auth-page">
+    <div class="auth-card auth-card-login">
+        <div class="auth-status">
+            <span class="auth-status-mark" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="M8 3H4.8A1.8 1.8 0 0 0 3 4.8v10.4A1.8 1.8 0 0 0 4.8 17H8m4-3 4-4-4-4m4 4H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p class="auth-eyebrow">SkillsTrade</p>
+            <h1>You’re signed out</h1>
+            <p class="auth-description">Thanks for spending time with SkillsTrade.</p>
+            <a href="{% url 'accounts:login' %}" class="auth-action-link">Sign in again</a>
+        </div>
     </div>
 </section>
 {% endblock %}

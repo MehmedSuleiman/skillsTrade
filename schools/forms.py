@@ -9,6 +9,7 @@ class BaseSchoolForm(forms.ModelForm):
     class Meta:
         model = School
         exclude = [
+            'user',
             'is_verified',
             'is_active',
             'slug',

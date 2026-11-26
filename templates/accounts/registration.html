@@ -3,53 +3,44 @@
 {% block title %}Create an account | SkillsTrade{% endblock %}
 
 {% block content %}
-<section class="account-page st-max-w-2xl st-mx-auto st-px-4 st-py-12">
-    <div class="account-card registration-card st-bg-white st-border st-border-slate-200 st-rounded-2xl st-p-8 st-shadow-sm">
-        <div class="registration-heading">
-            <div class="registration-mark" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"></circle><path d="M2 21a7 7 0 0 1 14 0"></path><path d="M19 8v6m-3-3h6"></path></svg>
-            </div>
-            <p class="registration-eyebrow">Join the community</p>
-            <h1 class="st-text-3xl st-font-bold st-text-slate-900">Create your account</h1>
-            <p class="registration-intro">Trade what you know for something new. Set up your account to get started.</p>
-        </div>
+<section class="auth-page auth-page-registration">
+    <div class="auth-card auth-card-registration">
+        <header class="auth-heading">
+            <span class="auth-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0m5-13v6m-3-3h6"/></svg>
+            </span>
+            <p class="auth-eyebrow">Join the community</p>
+            <h1>Create your account</h1>
+            <p class="auth-description">Trade what you know for something new. Set up your account to get started.</p>
+        </header>
 
-        {% if form.non_field_errors %}
-            <div class="registration-errors" role="alert">{{ form.non_field_errors }}</div>
-        {% endif %}
+        {% if form.non_field_errors %}<div class="auth-error-summary" role="alert">{{ form.non_field_errors }}</div>{% endif %}
 
-        <form method="post" class="registration-form">
+        <form method="post" class="auth-form auth-registration-form">
             {% csrf_token %}
-            <div class="registration-fields">
+            <div class="auth-registration-fields">
                 {% for field in form.visible_fields %}
                     {% if field.name == 'is_school' %}
-                        <label class="registration-account-type" for="{{ field.id_for_label }}">
-                            <span class="registration-checkbox">{{ field }}</span>
-                            <span class="registration-account-copy">
-                                <strong>Register as an official school</strong>
-                                <small>Choose this if you’re creating an account for a school or learning organization.</small>
-                            </span>
+                        <label class="auth-account-type" for="{{ field.id_for_label }}">
+                            {{ field }}
+                            <span><strong>Register as an official school</strong><small>For a school or learning organization.</small></span>
                         </label>
-                        {% if field.errors %}<p class="registration-field-error" role="alert">{{ field.errors|striptags }}</p>{% endif %}
+                        {% if field.errors %}<p class="auth-field-error" role="alert">{{ field.errors|striptags }}</p>{% endif %}
                     {% else %}
-                        <div class="registration-field{% if field.name == 'password1' or field.name == 'password2' %} registration-field-wide{% endif %}">
+                        <div class="auth-field{% if field.name == 'password1' or field.name == 'password2' %} auth-field-wide{% endif %}">
                             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                             {{ field }}
-                            {% if field.help_text %}<div class="registration-help">{{ field.help_text|safe }}</div>{% endif %}
-                            {% if field.errors %}<p class="registration-field-error" role="alert">{{ field.errors|striptags }}</p>{% endif %}
+                            {% if field.help_text %}<div class="auth-help">{{ field.help_text|safe }}</div>{% endif %}
+                            {% if field.errors %}<p class="auth-field-error" role="alert">{{ field.errors|striptags }}</p>{% endif %}
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
-
-            <button type="submit" class="registration-submit">
-                Create account
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg>
-            </button>
+            <button type="submit" class="auth-submit">Create account</button>
         </form>
 
-        <p class="registration-terms">By creating an account, you agree to use SkillsTrade respectfully and keep your account details accurate.</p>
-        <p class="account-switch-link">Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a></p>
+        <p class="auth-terms">By creating an account, you agree to use SkillsTrade respectfully and keep your account details accurate.</p>
+        <p class="auth-switch-link">Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a></p>
     </div>
 </section>
 {% endblock %}

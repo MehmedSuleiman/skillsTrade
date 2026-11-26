@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView
 from accounts.models import Profile
 from accounts.forms import CustomUserCreationForm, ProfileCreateForm, ProfileUpdateForm
 
@@ -32,3 +32,8 @@ class RegisterView(UserPassesTestMixin, SuccessMessageMixin, CreateView):
 
     def test_func(self):
         return not self.request.user.is_authenticated
+
+class ProfileDetails(DetailView):
+    model = Profile
+    template_name = 'accounts/profile_details.html'
+    context_object_name = 'profile'

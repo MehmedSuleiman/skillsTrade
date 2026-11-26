@@ -29,10 +29,6 @@
                 Verified learning communities
             </div>
         </div>
-        <a href="{% url 'schools:create_school' %}" class="st-mt-5 st-inline-flex st-items-center st-justify-center st-gap-2 st-rounded-xl st-bg-indigo-600 st-px-5 st-py-2-5 st-text-sm st-font-semibold st-text-white st-shadow-sm st-transition st-hover-bg-indigo-700 st-focus-outline-none st-focus-ring-2 st-focus-ring-indigo-500 st-focus-ring-offset-2">
-            <svg class="st-h-4 st-w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            Add a school
-        </a>
     </div>
 
     {% include 'common/search_bar.html' %}
@@ -48,7 +44,7 @@
                                     {% if school.logo %}
                                         <img src="{{ school.logo.url }}" alt="{{ school.name }} logo" class="st-w-14 st-h-14 st-rounded-xl st-object-cover st-border st-border-slate-200 st-shadow-sm st-shrink-0">
                                     {% else %}
-                                        <div class="st-w-14 st-h-14 st-rounded-xl st-bg-indigo-50 st-text-indigo-600 st-font-bold st-text-xl st-flex st-items-center st-justify-center st-border st-border-indigo-100 st-group-hover-bg-indigo-600 st-group-hover-text-white st-transition-colors st-shrink-0">{{ school.name|first|upper }}</div>
+                                        <div class="st-w-14 st-h-14 st-rounded-xl st-bg-indigo-50 st-text-indigo-600 st-font-bold st-text-xl st-flex st-items-center st-justify-center st-border st-border-indigo-100 st-group-hover-bg-indigo-600 st-group-hover-text-white st-transition-colors st-shrink-0">{{ school.name }}</div>
                                     {% endif %}
                                     <div class="st-min-w-0">
                                         <h2 class="st-text-lg st-font-bold st-text-slate-900 st-group-hover-text-indigo-600 st-transition-colors st-leading-snug st-break-words">{{ school.name }}</h2>

@@ -27,17 +27,18 @@
                 <a href="{% url 'skills:create-skill' %}" class="st-inline-flex st-items-center st-text-sm st-font-medium st-text-white st-bg-indigo-600 st-hover-bg-indigo-700 st-px-4 st-py-2 st-rounded-lg st-shadow-sm st-transition-colors">Post Skill</a>
                 {% if user.is_authenticated %}
                     {% if user.is_school and user.school %}
-                        <a href="{% url 'schools:update_school' slug=user.school.slug %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My school</a>
-                    {% elif user.profile %}
-                        <a href="{% url 'accounts:profile-update' pk=user.profile.pk %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My profile</a>
+                        {% if user.school.name %}
+                            <a href="{% url 'schools:detail' slug=user.school.slug %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My school</a>
+                        {% else %}
+                            <a href="{% url 'schools:update_school' slug=user.school.slug %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My school</a>
+                        {% endif %}
+                        {% elif user.profile %}
+                        <a href="{% url 'accounts:profile-detail' slug=user.profile.slug %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My profile</a>
                     {% endif %}
-                    <form method="post" action="{% url 'accounts:logout' %}" class="nav-logout-form">
-                        {% csrf_token %}
-                        <button type="submit" class="nav-logout-button">Sign out</button>
-                    </form>
+
                 {% else %}
                     <a href="{% url 'accounts:login' %}" class="nav-auth-link">Sign in</a>
-                    <a href="{% url 'accounts:register' %}" class="nav-register-link">Create account</a>
+{#                    <a href="{% url 'accounts:register' %}" class="nav-register-link">Create account</a>#}
                 {% endif %}
             </div>
         </nav>
