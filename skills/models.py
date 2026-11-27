@@ -43,7 +43,7 @@ class Skill(TimeStampModel):
     )
 
     badge = models.ImageField(
-        upload_to = 'skill_badges/',
+        upload_to = 'skills/skill_badges/%Y/%m/%d/',
         blank = True,
         null = True,
     )

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit {{ object.title }} | SkillsTrade{% endblock %}
+
+{% block content %}
+<main class="st-bg-gradient-to-br st-from-indigo-50 st-via-white st-to-slate-50">
+    <div class="st-mx-auto st-max-w-2xl st-px-4 st-py-8 st-sm-px-6 st-sm-py-12">
+        <nav aria-label="Breadcrumb" class="st-mb-6 st-flex st-items-center st-gap-2 st-text-xs st-text-slate-500 st-sm-text-sm">
+            <a href="{% url 'common:home' %}" class="st-hover-text-indigo-600">Home</a>
+            <span class="st-text-slate-300">/</span>
+            <a href="{% url 'lessons:lessons' %}" class="st-hover-text-indigo-600">Lessons</a>
+            <span class="st-text-slate-300">/</span>
+            <span class="st-font-medium st-text-slate-800" aria-current="page">Edit lesson</span>
+        </nav>
+
+        <header class="st-mb-8">
+            <p class="st-text-sm st-font-semibold st-uppercase st-tracking-wider st-text-indigo-600">Manage your listing</p>
+            <h1 class="st-mt-2 st-text-2xl st-font-extrabold st-tracking-tight st-text-slate-900 st-sm-text-3xl">Edit Lesson</h1>
+            <p class="st-mt-2 st-text-sm st-leading-6 st-text-slate-600">Update the details learners see about your lesson.</p>
+        </header>
+
+        <section class="st-overflow-hidden st-rounded-2xl st-border st-border-slate-200-slash-90 st-bg-white st-shadow-sm">
+            <div class="st-h-1 st-bg-indigo-600"></div>
+            {% include 'lessons/lesson_form.html' %}
+        </section>
+        <p class="st-mt-4 st-text-center st-text-xs st-text-slate-500"><span class="st-text-rose-500">*</span> Required fields</p>
+    </div>
+</main>
+{% endblock %}

@@ -108,7 +108,7 @@ class Profile(TimeStampModel):
     )
 
     profile_pic = models.ImageField(
-        upload_to="profiles/profile_pic",
+        upload_to="profiles/profile_pic/%Y/%m/%d/",
         blank=True,
         null=True,
     )

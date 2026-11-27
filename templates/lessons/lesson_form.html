@@ -1,0 +1,36 @@
+<form method="post" enctype="multipart/form-data" class="st-space-y-6 st-p-6 st-sm-p-8">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+        <div role="alert"
+             class="st-rounded-xl st-border st-border-rose-200 st-bg-rose-50 st-p-4 st-text-sm st-text-rose-800">
+            <p class="st-mb-1 st-font-semibold">Please correct the following errors:</p>
+            <ul class="st-list-inside st-list-disc st-space-y-1 st-text-xs">{% for error in form.non_field_errors %}
+                <li>{{ error }}</li>{% endfor %}</ul>
+        </div>
+    {% endif %}
+
+    {% for field in form %}
+        <div>
+            <label for="{{ field.id_for_label }}"
+                   class="st-mb-1-5 st-block st-text-sm st-font-semibold st-text-slate-800">
+                {{ field.label }}{% if field.field.required %}
+                    <span class="st-ml-1 st-text-rose-500" aria-hidden="true">*</span>
+                    <span class="st-sr-only"> (required)</span>{% else %}
+                    <span class="st-ml-1 st-text-xs st-font-normal st-text-slate-400">(Optional)</span>{% endif %}
+            </label>
+            {{ field }}
+            {% if field.help_text %}<p class="st-mt-1 st-text-xs st-text-slate-500">{{ field.help_text }}</p>{% endif %}
+            {% if field.errors %}
+                <p class="st-mt-1-5 st-text-xs st-font-medium st-text-rose-600">{{ field.errors|striptags }}</p>{% endif %}
+        </div>
+    {% endfor %}
+
+    <div class="st-flex st-items-center st-justify-end st-gap-3 st-border-t st-border-slate-100 st-pt-4">
+        <a href="{% url 'lessons:lessons' %}"
+           class="st-rounded-xl st-px-4 st-py-2-5 st-text-sm st-font-medium st-text-slate-600 st-transition-colors st-hover-bg-slate-100 st-hover-text-slate-900">Cancel</a>
+        <button type="submit"
+                class="st-cursor-pointer st-rounded-xl st-bg-indigo-600 st-px-6 st-py-2-5 st-text-sm st-font-semibold st-text-white st-shadow-sm st-transition-all st-hover-bg-indigo-700 st-active-bg-indigo-800">
+            Publish Lesson
+        </button>
+    </div>
+</form>

@@ -74,6 +74,37 @@
                     </section>
                 </div>
 
+                <section class="member-profile-lessons" aria-labelledby="member-lessons-title">
+                    <div class="st-mb-4 st-flex st-flex-wrap st-items-end st-justify-between st-gap-2">
+                        <div>
+                            <h2 id="member-lessons-title" class="st-text-lg st-font-bold st-text-slate-900">Lessons</h2>
+                            <p class="st-mt-1 st-text-sm st-text-slate-500">Lessons shared by {% firstof profile.first_name profile.user.username %}.</p>
+                        </div>
+                        <div class="st-flex st-items-center st-gap-2">
+                            <span class="st-rounded-full st-border st-border-indigo-100 st-bg-indigo-50 st-px-2-5 st-py-1 st-text-xs st-font-semibold st-text-indigo-700">{{ profile.lessons.all|length }} lesson{{ profile.lessons.all|length|pluralize }}</span>
+                            {% if user.is_authenticated and user.pk == profile.user_id %}<a href="{% url 'lessons:create' %}" class="st-inline-flex st-items-center st-rounded-xl st-bg-indigo-600 st-px-3 st-py-2 st-text-xs st-font-semibold st-text-white st-transition st-hover-bg-indigo-700">Add lesson</a>{% endif %}
+                        </div>
+                    </div>
+                    {% with lessons=profile.lessons.all %}
+                        {% if lessons %}
+                            <div class="st-grid st-grid-cols-1 st-gap-3 st-md-grid-cols-2">
+                                {% for lesson in lessons %}
+                                    <article class="st-rounded-2xl st-border st-border-slate-200 st-bg-white st-p-4">
+                                        <h3 class="st-text-sm st-font-semibold st-text-slate-800"><a class="st-hover-text-indigo-700" href="{% url 'lessons:detail' lesson.slug %}">{{ lesson.title }}</a></h3>
+                                        <p class="st-mt-1 st-text-sm st-leading-6 st-text-slate-600">{{ lesson.description|truncatewords:24 }}</p>
+                                        <p class="st-mt-3 st-text-xs st-font-medium st-text-slate-500">{{ lesson.duration_weeks }} week{{ lesson.duration_weeks|pluralize }}</p>
+                                        {% with lesson_skills=lesson.skills.all %}
+                                            {% if lesson_skills %}<div class="st-mt-3 st-flex st-flex-wrap st-gap-1-5">{% for skill in lesson_skills %}<a href="{% url 'skills:detail' skill.slug %}" class="st-rounded-lg st-bg-indigo-50 st-px-2-5 st-py-1 st-text-xs st-font-medium st-text-indigo-700 st-hover-bg-indigo-100">{{ skill.name }}</a>{% endfor %}</div>{% endif %}
+                                        {% endwith %}
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="st-rounded-2xl st-border st-border-dashed st-border-slate-200 st-bg-slate-50 st-px-5 st-py-8 st-text-center st-text-sm st-text-slate-500">This member has not added any lessons yet.</p>
+                        {% endif %}
+                    {% endwith %}
+                </section>
+
                 {% if user.is_authenticated and user.pk == profile.user_id %}
                     <section class="account-settings-panel profile-account-settings" aria-labelledby="profile-account-heading">
                         <div class="account-settings-copy">

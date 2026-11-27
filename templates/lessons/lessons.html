@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load skill_extras %}
+
+{% block title %}Lessons | SkillsTrade{% endblock %}
+
+{% block content %}
+<section class="st-relative st-overflow-hidden st-bg-gradient-to-br st-from-indigo-950 st-via-indigo-900 st-to-slate-900">
+    <div class="st-absolute st-inset-0 st-opacity-20" aria-hidden="true">
+        <div class="st-absolute st--right-20 st--top-32 st-h-96 st-w-96 st-rounded-full st-bg-indigo-400 st-blur-3xl"></div>
+        <div class="st-absolute st--bottom-40 st-left-1-slash-4 st-h-80 st-w-80 st-rounded-full st-bg-sky-400 st-blur-3xl"></div>
+    </div>
+    <div class="st-relative st-mx-auto st-max-w-7xl st-px-4 st-py-14 st-sm-px-6 st-sm-py-20 st-lg-px-8">
+        <p class="st-text-sm st-font-semibold st-uppercase st-tracking-0-2em st-text-indigo-200">Learn from your community</p>
+        <div class="st-mt-3 st-flex st-flex-col st-gap-6 st-sm-flex-row st-sm-items-end st-sm-justify-between">
+            <div class="st-max-w-2xl">
+                <h1 class="st-text-3xl st-font-extrabold st-tracking-tight st-text-white st-sm-text-5xl">Lessons</h1>
+                <p class="st-mt-4 st-max-w-xl st-text-base st-leading-relaxed st-text-indigo-100 st-sm-text-lg">Discover practical lessons shared by people in your community.</p>
+            </div>
+            <div class="st-inline-flex st-w-fit st-items-center st-gap-2 st-rounded-full st-border st-border-white-slash-15 st-bg-white-slash-10 st-px-4 st-py-2 st-text-sm st-font-medium st-text-white st-backdrop-blur">
+                <svg class="st-h-4 st-w-4 st-text-indigo-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z"/></svg>
+                {{ object_list|length }} lesson{{ object_list|length|pluralize }} available
+            </div>
+        </div>
+        <form method="get" class="st-mt-8 st-flex st-max-w-xl st-gap-2 st-rounded-2xl st-bg-white st-p-2 st-shadow-xl st-shadow-indigo-950-slash-20">
+            <label for="lesson-search" class="st-sr-only">Search lessons</label>
+            <div class="st-flex st-flex-1 st-items-center st-gap-3 st-px-3 st-text-slate-400">
+                <svg class="st-h-5 st-w-5 st-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="m20 20-4-4"/></svg>
+                <input id="lesson-search" name="query" type="search" value="{{ request.GET.query }}" placeholder="Search lessons or skills" class="st-w-full st-border-0 st-bg-transparent st-py-2 st-text-sm st-text-slate-900 st-placeholder-text-slate-400 st-focus-outline-none st-focus-ring-0">
+            </div>
+            <button type="submit" class="st-rounded-xl st-bg-indigo-600 st-px-5 st-py-2-5 st-text-sm st-font-semibold st-text-white st-transition st-hover-bg-indigo-700 st-focus-outline-none st-focus-ring-2 st-focus-ring-indigo-500 st-focus-ring-offset-2">Search</button>
+        </form>
+    </div>
+</section>
+
+<section class="st-mx-auto st-max-w-7xl st-px-4 st-py-10 st-sm-px-6 st-sm-py-14 st-lg-px-8" aria-label="Available lessons">
+    {% if object_list %}
+        <div class="st-grid st-grid-cols-1 st-gap-6 st-md-grid-cols-2 st-xl-grid-cols-3">
+            {% for lesson in object_list %}
+                <article class="st-group st-flex st-h-full st-flex-col st-overflow-hidden st-rounded-2xl st-border st-border-slate-200 st-bg-white st-shadow-sm st-transition st-duration-200 st-hover--translate-y-1 st-hover-border-indigo-200 st-hover-shadow-lg st-hover-shadow-indigo-950-slash-5">
+                    <div class="st-relative st-flex st-h-44 st-items-center st-justify-center st-overflow-hidden st-bg-gradient-to-br st-from-indigo-50 st-via-slate-50 st-to-sky-50">
+                        {% if lesson.logo %}
+                            <img src="{{ lesson.logo.url }}" alt="{{ lesson.title }}" class="st-h-full st-w-full st-object-cover st-transition st-duration-300 st-group-hover-scale-105">
+                        {% else %}
+                            <div class="st-flex st-h-16 st-w-16 st-items-center st-justify-center st-rounded-2xl st-bg-white st-text-indigo-600 st-shadow-sm st-ring-1 st-ring-indigo-100">
+                                <svg class="st-h-8 st-w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253Z"/></svg>
+                            </div>
+                        {% endif %}
+                        <span class="st-absolute st-left-4 st-top-4 st-rounded-full st-border st-border-white-slash-70 st-bg-white-slash-90 st-px-3 st-py-1 st-text-xs st-font-semibold st-text-indigo-700 st-shadow-sm st-backdrop-blur">{{ lesson.duration_weeks|duration_label }}</span>
+                    </div>
+
+                    <div class="st-flex st-flex-1 st-flex-col st-p-5 st-sm-p-6">
+                        <div class="st-mb-3 st-flex st-items-center st-gap-2 st-text-xs st-font-medium st-text-slate-500">
+                            <span class="st-flex st-h-7 st-w-7 st-items-center st-justify-center st-rounded-lg st-bg-indigo-50 st-font-bold st-text-indigo-700">{% firstof lesson.profile.first_name lesson.profile.user.username as teacher_name %}{{ teacher_name|first|upper }}</span>
+                            <span class="st-line-clamp-1">{{ teacher_name }}</span>
+                        </div>
+                        <h2 class="st-text-lg st-font-bold st-leading-snug st-text-slate-900 st-group-hover-text-indigo-700"><a href="{% url 'lessons:detail' lesson.slug %}" class="st-focus-outline-none st-focus-ring-2 st-focus-ring-indigo-500">{{ lesson.title }}</a></h2>
+                        <p class="st-mt-2 st-line-clamp-3 st-flex-1 st-text-sm st-leading-relaxed st-text-slate-600">{{ lesson.description }}</p>
+
+                        {% with lesson_skills=lesson.skills.all %}
+                            {% if lesson_skills %}
+                                <div class="st-mt-5 st-flex st-flex-wrap st-gap-1-5">
+                                    {% for skill in lesson_skills|slice:":3" %}
+                                        <span class="st-rounded-lg st-bg-slate-100 st-px-2-5 st-py-1 st-text-xs st-font-medium st-text-slate-600">{{ skill.name }}</span>
+                                    {% endfor %}
+                                    {% if lesson_skills|length > 3 %}<span class="st-px-1 st-py-1 st-text-xs st-text-slate-500">+{{ lesson_skills|length|add:"-3" }}</span>{% endif %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+
+                        <div class="st-mt-6 st-border-t st-border-slate-100 st-pt-4">
+                            {% if lesson.url %}
+                                <a href="{% url 'lessons:detail' slug=lesson.slug %}" target="_blank" rel="noopener noreferrer" class="st-inline-flex st-w-full st-items-center st-justify-center st-gap-2 st-rounded-xl st-bg-indigo-600 st-px-4 st-py-2-5 st-text-sm st-font-semibold st-text-white st-shadow-sm st-transition st-hover-bg-indigo-700 st-focus-outline-none st-focus-ring-2 st-focus-ring-indigo-500 st-focus-ring-offset-2">Visit lesson <span class="st-sr-only">by {{ teacher_name }}</span><svg class="st-h-4 st-w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+                            {% else %}
+                                <a href="mailto:{{ lesson.email }}" class="st-inline-flex st-w-full st-items-center st-justify-center st-gap-2 st-rounded-xl st-bg-indigo-600 st-px-4 st-py-2-5 st-text-sm st-font-semibold st-text-white st-shadow-sm st-transition st-hover-bg-indigo-700 st-focus-outline-none st-focus-ring-2 st-focus-ring-indigo-500 st-focus-ring-offset-2">Contact teacher <span class="st-sr-only">{{ teacher_name }}</span><svg class="st-h-4 st-w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="st-rounded-2xl st-border st-border-dashed st-border-slate-300 st-bg-white st-px-6 st-py-16 st-text-center">
+            <div class="st-mx-auto st-flex st-h-14 st-w-14 st-items-center st-justify-center st-rounded-2xl st-bg-indigo-50 st-text-indigo-600">
+                <svg class="st-h-7 st-w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253Z"/></svg>
+            </div>
+            <h2 class="st-mt-4 st-text-lg st-font-bold st-text-slate-900">No lessons found</h2>
+            <p class="st-mt-1 st-text-sm st-text-slate-500">Try another search, or check back later for new lessons.</p>
+            {% if request.GET.query %}<a href="{% url 'lessons:lessons' %}" class="st-mt-5 st-inline-flex st-rounded-xl st-border st-border-slate-200 st-px-4 st-py-2 st-text-sm st-font-semibold st-text-slate-700 st-transition st-hover-bg-slate-50">Clear search</a>{% endif %}
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
