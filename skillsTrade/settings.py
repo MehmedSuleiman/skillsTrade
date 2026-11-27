@@ -41,7 +41,7 @@ PROJECT_APPS = [
     'skills',
     'schools',
     'accounts',
-    'community_lessons'
+    'lessons'
 ]
 
 INSTALLED_APPS = [

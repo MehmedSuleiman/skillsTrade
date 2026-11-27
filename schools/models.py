@@ -121,7 +121,7 @@ class Course(TimeStampModel):
     url = models.URLField()
 
     logo = models.ImageField(
-        upload_to='courses/logos/',
+        upload_to='courses/logos/%Y/%m/%d/',
     )
 
     duration_weeks = models.PositiveIntegerField()

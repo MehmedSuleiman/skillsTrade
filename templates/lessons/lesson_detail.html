@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}{{ lesson.title }} | SkillsTrade{% endblock %}
+
+{% block content %}
+<main class="st-relative st-isolate st-overflow-hidden st-bg-gradient-to-br st-from-indigo-50 st-via-white st-to-slate-50">
+    <div class="st-absolute st--top-24 st-right-0 st--z-10 st-h-72 st-w-72 st-rounded-full st-bg-indigo-100-slash-60 st-blur-3xl" aria-hidden="true"></div>
+    <div class="st-relative st-mx-auto st-max-w-6xl st-px-4 st-py-8 st-sm-px-6 st-sm-py-12 st-lg-px-8">
+        <nav aria-label="Breadcrumb" class="st-mb-8 st-flex st-items-center st-gap-2 st-text-sm st-text-slate-500">
+            <a href="{% url 'common:home' %}" class="st-hover-text-indigo-600">Home</a>
+            <span class="st-text-slate-300">/</span>
+            <a href="{% url 'lessons:lessons' %}" class="st-hover-text-indigo-600">Lessons</a>
+            <span class="st-text-slate-300">/</span>
+            <span class="st-truncate st-font-medium st-text-slate-800" aria-current="page">{{ lesson.title }}</span>
+        </nav>
+
+        <div class="st-grid st-grid-cols-1 st-items-start st-gap-6 st-lg-grid-cols-3 st-lg-gap-8">
+            <article class="st-overflow-hidden st-rounded-3xl st-border st-border-slate-200 st-bg-white st-shadow-sm st-lg-col-span-2">
+                <div class="st-h-2 st-bg-gradient-to-r st-from-indigo-500 st-via-violet-500 st-to-sky-400"></div>
+                {% if lesson.logo %}<img src="{{ lesson.logo.url }}" alt="{{ lesson.title }}" class="st-h-64 st-w-full st-object-cover">{% endif %}
+                <div class="st-p-6 st-sm-p-10">
+                    <div class="st-flex st-flex-wrap st-items-center st-gap-3">
+                        <span class="st-inline-flex st-items-center st-gap-2 st-rounded-full st-bg-indigo-50 st-px-3 st-py-1 st-text-xs st-font-semibold st-text-indigo-700">
+                            <svg class="st-h-4 st-w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253Z"/></svg>
+                            Community lesson
+                        </span>
+                        <span class="st-text-sm st-text-slate-500">{{ lesson.duration_weeks }} week{{ lesson.duration_weeks|pluralize }}</span>
+                    </div>
+                    <h1 class="st-mt-4 st-break-words st-text-3xl st-font-extrabold st-tracking-tight st-text-slate-900 st-sm-text-4xl">{{ lesson.title }}</h1>
+                    <p class="st-mt-2 st-text-sm st-text-slate-500">Shared by {% firstof lesson.profile.first_name lesson.profile.user.username %}{% if lesson.created_at %} on {{ lesson.created_at|date:"F j, Y" }}{% endif %}</p>
+
+                    {% if user.is_authenticated and user.profile == lesson.profile %}
+                        <div class="st-mt-5 st-flex st-flex-wrap st-gap-3">
+                            <a href="{% url 'lessons:update' lesson.slug %}" class="st-inline-flex st-items-center st-justify-center st-rounded-xl st-bg-indigo-600 st-px-4 st-py-2-5 st-text-sm st-font-semibold st-text-white st-transition-colors st-hover-bg-indigo-700">Edit lesson</a>
+                            <a href="{% url 'lessons:delete' lesson.slug %}" class="st-inline-flex st-items-center st-justify-center st-rounded-xl st-border st-border-rose-200 st-bg-white st-px-4 st-py-2-5 st-text-sm st-font-semibold st-text-rose-700 st-transition-colors st-hover-bg-rose-50">Delete lesson</a>
+                        </div>
+                    {% endif %}
+
+                    <section class="st-mt-8 st-border-t st-border-slate-100 st-pt-7">
+                        <h2 class="st-mb-3 st-text-lg st-font-bold st-text-slate-900">About this lesson</h2>
+                        <p class="st-whitespace-pre-line st-leading-7 st-text-slate-600">{{ lesson.description }}</p>
+                    </section>
+
+                    <section class="st-mt-8 st-border-t st-border-slate-100 st-pt-7">
+                        <h2 class="st-mb-4 st-text-lg st-font-bold st-text-slate-900">Skills covered</h2>
+                        {% with skills=lesson.skills.all %}
+                            {% if skills %}
+                                <div class="st-flex st-flex-wrap st-gap-2">
+                                    {% for skill in skills %}<a href="{% url 'skills:detail' skill.slug %}" class="st-rounded-xl st-border st-border-indigo-100 st-bg-indigo-50 st-px-3 st-py-2 st-text-sm st-font-medium st-text-indigo-700 st-hover-bg-indigo-100">{{ skill.name }}</a>{% endfor %}
+                                </div>
+                            {% else %}<p class="st-text-sm st-text-slate-500">Skills have not been added to this lesson yet.</p>{% endif %}
+                        {% endwith %}
+                    </section>
+                </div>
+            </article>
+
+            <aside class="st-space-y-5">
+                <section class="st-rounded-3xl st-bg-slate-900 st-p-6 st-text-white st-shadow-lg st-shadow-slate-900-slash-10">
+                    <div class="st-mb-5 st-flex st-h-11 st-w-11 st-items-center st-justify-center st-rounded-xl st-bg-white-slash-10 st-text-indigo-200">
+                        <svg class="st-h-5 st-w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+                    </div>
+                    <h2 class="st-text-xl st-font-bold">Interested in this lesson?</h2>
+                    <p class="st-mt-2 st-text-sm st-leading-6 st-text-slate-300">Reach out to the instructor to learn more and plan your next step.</p>
+                    <a href="mailto:{{ lesson.email }}" class="st-mt-5 st-inline-flex st-w-full st-items-center st-justify-center st-rounded-xl st-bg-white st-px-4 st-py-3 st-text-sm st-font-semibold st-text-slate-900 st-hover-bg-indigo-50">Contact instructor</a>
+                    {% if lesson.url %}<a href="{{ lesson.url }}" target="_blank" rel="noopener noreferrer" class="st-mt-3 st-inline-flex st-w-full st-items-center st-justify-center st-rounded-xl st-border st-border-white-slash-20 st-px-4 st-py-3 st-text-sm st-font-semibold st-text-white st-hover-bg-white-slash-10">Visit lesson website</a>{% endif %}
+                </section>
+
+                <section class="st-rounded-3xl st-border st-border-slate-200 st-bg-white st-p-6 st-shadow-sm">
+                    <h2 class="st-text-sm st-font-semibold st-uppercase st-tracking-wider st-text-slate-500">Lesson details</h2>
+                    <dl class="st-mt-4 st-divide-y st-divide-slate-100">
+                        <div class="st-flex st-items-center st-justify-between st-gap-4 st-py-3"><dt class="st-text-sm st-text-slate-500">Instructor</dt><dd class="st-text-right st-text-sm st-font-semibold st-text-slate-800">{% firstof lesson.profile.first_name lesson.profile.user.username %}</dd></div>
+                        <div class="st-flex st-items-center st-justify-between st-gap-4 st-py-3"><dt class="st-text-sm st-text-slate-500">Duration</dt><dd class="st-text-sm st-font-semibold st-text-slate-800">{{ lesson.duration_weeks }} week{{ lesson.duration_weeks|pluralize }}</dd></div>
+                        <div class="st-flex st-items-center st-justify-between st-gap-4 st-py-3"><dt class="st-text-sm st-text-slate-500">Views</dt><dd class="st-text-sm st-font-semibold st-text-slate-800">{{ lesson.views }}</dd></div>
+                    </dl>
+                </section>
+
+                <a href="{% url 'lessons:lessons' %}" class="st-inline-flex st-items-center st-gap-2 st-px-1 st-text-sm st-font-medium st-text-slate-500 st-hover-text-indigo-600"><span aria-hidden="true">←</span> Back to all lessons</a>
+            </aside>
+        </div>
+    </div>
+</main>
+{% endblock %}

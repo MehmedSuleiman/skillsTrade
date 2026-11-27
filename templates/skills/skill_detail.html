@@ -95,6 +95,34 @@
                                 {% endif %}
                             </section>
                         {% endwith %}
+
+                        {% with lessons=skill.skills.all %}
+                            <section class="st-mt-8 st-border-t st-border-slate-100 st-pt-7">
+                                <div class="st-mb-4 st-flex st-flex-wrap st-items-end st-justify-between st-gap-2">
+                                    <div>
+                                        <h2 class="st-text-lg st-font-bold st-text-slate-900">Related lessons</h2>
+                                        <p class="st-mt-1 st-text-sm st-text-slate-500">Lessons that teach or use {{ skill.name }}.</p>
+                                    </div>
+                                    <span class="st-rounded-full st-border st-border-indigo-100 st-bg-indigo-50 st-px-2-5 st-py-1 st-text-xs st-font-semibold st-text-indigo-700">{{ lessons|length }} lesson{{ lessons|length|pluralize }}</span>
+                                </div>
+                                {% if lessons %}
+                                    <div class="st-grid st-grid-cols-1 st-gap-3 st-sm-grid-cols-2">
+                                        {% for lesson in lessons %}
+                                            <article class="st-rounded-2xl st-border st-border-slate-200 st-p-4">
+                                                <h3 class="st-text-sm st-font-semibold st-text-slate-800"><a href="{% url 'lessons:detail' lesson.slug %}" class="st-text-indigo-600 st-hover-text-indigo-700">{{ lesson.title }}</a></h3>
+                                                <p class="st-mt-1 st-text-sm st-leading-6 st-text-slate-600">{{ lesson.description|truncatewords:24 }}</p>
+                                                <div class="st-mt-3 st-flex st-flex-wrap st-items-center st-justify-between st-gap-2 st-text-xs st-font-medium st-text-slate-500">
+                                                    <span>{% firstof lesson.profile.first_name lesson.profile.user.username %}</span>
+                                                    <span>{{ lesson.duration_weeks }} week{{ lesson.duration_weeks|pluralize }}</span>
+                                                </div>
+                                            </article>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <p class="st-rounded-2xl st-border st-border-dashed st-border-slate-200 st-bg-slate-50 st-px-5 st-py-8 st-text-center st-text-sm st-text-slate-500">No lessons are associated with this skill yet.</p>
+                                {% endif %}
+                            </section>
+                        {% endwith %}
                     </div>
                 </article>
 

@@ -37,3 +37,6 @@ class ProfileDetails(DetailView):
     model = Profile
     template_name = 'accounts/profile_details.html'
     context_object_name = 'profile'
+
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('lessons__skills')

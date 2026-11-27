@@ -9,7 +9,7 @@
 </head>
 <body class="st-bg-slate-50 st-text-slate-800 st-antialiased st-min-h-screen st-flex st-flex-col">
     <header class="st-bg-white st-border-b st-border-slate-200 st-sticky st-top-0 st-z-50">
-        <nav class="st-max-w-7xl st-mx-auto st-px-4 st-sm-px-6 st-lg-px-8 st-h-16 st-flex st-items-center st-justify-between">
+        <nav class="site-nav st-max-w-7xl st-mx-auto st-px-4 st-sm-px-6 st-lg-px-8 st-flex st-items-center st-justify-between">
             <a href="{% url 'common:home' %}" class="st-flex st-items-center st-gap-2-5 st-group">
                 <div class="st-w-10 st-h-10 st-rounded-xl st-bg-indigo-600 st-flex st-items-center st-justify-center st-text-white st-shadow-sm st-group-hover-bg-indigo-700 st-transition-colors">
                   <svg class="st-w-5 st-h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -21,23 +21,23 @@
                 </div>
                 <span class="st-text-xl st-font-bold st-tracking-tight st-text-slate-900 st-group-hover-text-indigo-600 st-transition-colors">Skills<span class="st-text-indigo-600">Trade</span></span>
             </a>
-            <div class="st-flex st-items-center st-gap-2 st-sm-gap-4">
-                <a href="{% url 'schools:course_list' %}" class="st-text-sm st-font-medium st-text-slate-600 st-hover-text-indigo-600 st-hover-bg-slate-50 st-px-3 st-py-2 st-rounded-lg st-transition-colors">Courses</a>
-                <a href="{% url 'schools:schools_home' %}" class="st-text-sm st-font-medium st-text-slate-600 st-hover-text-indigo-600 st-hover-bg-slate-50 st-px-3 st-py-2 st-rounded-lg st-transition-colors">Official Schools</a>
-                <a href="{% url 'skills:create-skill' %}" class="st-inline-flex st-items-center st-text-sm st-font-medium st-text-white st-bg-indigo-600 st-hover-bg-indigo-700 st-px-4 st-py-2 st-rounded-lg st-shadow-sm st-transition-colors">Post Skill</a>
+            <div class="site-nav-links">
+                <a href="{% url 'schools:course_list' %}" class="site-nav-link">Courses</a>
+                <a href="{% url 'schools:schools_home' %}" class="site-nav-link">Official Schools</a>
+                <a href="{% url 'lessons:lessons' %}" class="site-nav-link">Lessons</a>
                 {% if user.is_authenticated %}
                     {% if user.is_school and user.school %}
                         {% if user.school.name %}
-                            <a href="{% url 'schools:detail' slug=user.school.slug %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My school</a>
+                            <a href="{% url 'schools:detail' slug=user.school.slug %}" class="site-nav-account">My school</a>
                         {% else %}
-                            <a href="{% url 'schools:update_school' slug=user.school.slug %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My school</a>
+                            <a href="{% url 'schools:update_school' slug=user.school.slug %}" class="site-nav-account">My school</a>
                         {% endif %}
                         {% elif user.profile %}
-                        <a href="{% url 'accounts:profile-detail' slug=user.profile.slug %}" class="st-inline-flex st-items-center st-gap-1-5 st-text-sm st-font-semibold st-text-slate-700 st-hover-text-indigo-600 st-px-3 st-py-2 st-rounded-lg st-border st-border-slate-200 st-transition-colors">My profile</a>
+                        <a href="{% url 'accounts:profile-detail' slug=user.profile.slug %}" class="site-nav-account">My profile</a>
                     {% endif %}
 
                 {% else %}
-                    <a href="{% url 'accounts:login' %}" class="nav-auth-link">Sign in</a>
+                    <a href="{% url 'accounts:login' %}" class="site-nav-account">Sign in</a>
 {#                    <a href="{% url 'accounts:register' %}" class="nav-register-link">Create account</a>#}
                 {% endif %}
             </div>
