@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'skillsTrade.middleware.RequestCountMiddleware'
 ]
 
 ROOT_URLCONF = 'skillsTrade.urls'
@@ -172,3 +173,6 @@ LOGIN_REDIRECT_URL = "common:home"
 LOGOUT_REDIRECT_URL = "common:home"
 LOGIN_URL = 'accounts:login'
 LOGOUT_URL = 'accounts:logout'
+
+
+REQUESTS_PER_MINUTE = 60
